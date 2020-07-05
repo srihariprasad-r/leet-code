@@ -13,6 +13,12 @@ class Solution(object):
         """
         l3 = ListNode(-1);
         head = l3
+
+        if (l1 is None) and not(l2 is None):
+            l3.next = l2;
+        elif (l2 is None) and not(l1 is None):
+            l3.next = l1;
+        
         while(not(l1 is None) and not(l2 is None)):
             if(l1.val <= l2.val):
                 l3.next = l1
