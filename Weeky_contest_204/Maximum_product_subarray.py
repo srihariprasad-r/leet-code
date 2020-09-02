@@ -41,6 +41,6 @@ class Solution(object):
             elif tmp > 0 and max_prod > tmp:
                 end= i + 1
                 tmp = 1
-                max_prod = 1gi                                                        
+                max_prod = 1                                                        
             
         return end - start + 1
