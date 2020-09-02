@@ -20,15 +20,27 @@ class Solution(object):
             return 0
                                 
         for i in range(len(nums)):
-            if nums[i] == 0:   
-                tmp = 1
-                continue               
+            if nums[i] == 0:
+                if i + 1 < len(nums) and  max_prod < max_prod * nums[i+1]:
+                    start = i + 1
+                    tmp = 1                                
+                    max_prod = 1
+                    continue                    
+                elif i + 1 == len(nums):
+                    return end - start + 1
                                     
-            if max_prod < tmp * nums[i]:   
-                tmp  = tmp * nums[i]                
+            tmp  = tmp * nums[i]                                                            
+            
+            if tmp > 0 and max_prod < tmp:    
                 max_prod = tmp 
-                end = i                                
-            else:
-                tmp = nums[i]
+                end = i    
+            elif tmp < 0 and max_prod < tmp:                
+                start = i + 1
+                tmp = 1
+                max_prod = 1
+            elif tmp > 0 and max_prod > tmp:
+                end= i + 1
+                tmp = 1
+                max_prod = 1gi                                                        
             
         return end - start + 1
