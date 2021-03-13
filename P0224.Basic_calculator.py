@@ -11,6 +11,9 @@ class Solution(object):
         j = 0
     
         s = re.sub(r' ','', s)
+        
+        if s[0] == '-':
+            s = re.findall(r'^\-[0-9]|^.*\-|\)|\(|\+|[0-9]', s)
 
         while j < len(s):
             if s[j] != '(' and s[j] != '-' and s[j] != '+' and s[j] != ')':
@@ -19,7 +22,7 @@ class Solution(object):
                 ops.append(s[j])
             elif s[j] == '+' or s[j] == '-':
                 ops.append(s[j])
-            elif s[j] != ' ':
+            elif s[j] == ')':
                 while len(ops)> 0 and ops[-1] != '(' and len(stck) > 0:
                     val2 = stck.pop()
                     val1 = stck.pop()
@@ -31,9 +34,13 @@ class Solution(object):
                     stck.append(val)
                 ops.pop()
 
-
             j += 1
-
+        
+        if len(ops) == 0:
+            return  int("".join(map(str,stck)))
+        
+        stck = stck[::-1]
+        ops = ops[::-1]
         while len(ops) > 0 and len(stck) > 0:
             val1 = stck.pop()
             val2 = stck.pop()
@@ -42,7 +49,6 @@ class Solution(object):
                 val = val1 + val2
             else:
                 val = val1 - val2
-            stck.append(val)  
-         
+            stck.append(val) 
         
         return stck[-1]
