@@ -19,6 +19,7 @@ class Solution(object):
         """
         :rtype: int
         """
+        from random import random
         return random.choice(self.lst)
 
 # Your Solution object will be instantiated and called as such:
