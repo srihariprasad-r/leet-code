@@ -11,3 +11,27 @@ class Solution(object):
                 index += 1
         
         return index
+
+# Method 2
+
+class Solution(object):
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        left = 0
+        right = 1
+        
+        while right < len(nums):
+            if nums[left] == nums[right]:
+                right += 1
+            else:
+                tmp = nums[left + 1]
+                nums[left + 1] = nums[right]
+                nums[right] = nums[left + 1]
+                left = left + 1
+                right += 1
+        
+        return left + 1
+        
