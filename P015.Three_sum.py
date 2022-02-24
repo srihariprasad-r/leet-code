@@ -32,3 +32,36 @@ class Solution(object):
                     right -= 1
         
         return res                     
+
+# Method 2
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        if len(nums) < 3:
+            return []
+        
+        nums.sort()
+        
+        res = []
+        
+        for i in range(len(nums)-2):
+            low = i + 1
+            high = len(nums) - 1
+            while low != high:
+                sum_el = nums[i] + nums[low] + nums[high]
+                
+                if sum_el == 0:
+                    ot = [nums[i] , nums[low] , nums[high]]
+                    if ot not in res:
+                        res.append(ot)
+                    low += 1
+                elif sum_el < 0:
+                    low += 1
+                else:
+                    high -= 1
+                
+                    
+        return res
