@@ -12,13 +12,16 @@ class Solution(object):
 
         while right < len(nums):
             if nums[right] > 0:
-                j = left
+                j = right + 1
                 while j < len(nums):
                     if nums[j] < 0:
                         break
                     j += 1
                 if j < len(nums) and right < len(nums):
                     nums[j], nums[right] = nums[right], nums[j]
+                    if j - right > 1:
+                        nums[j], nums[j-1] = nums[j-1], nums[j]
+                # left += 1
                 right += 2
             elif nums[left] < 0:
                 i = right
@@ -28,7 +31,10 @@ class Solution(object):
                     i += 1
                 if i < len(nums) and left < len(nums):
                     nums[i], nums[left] = nums[left], nums[i]
+                    if i - left > 1:
+                        nums[i], nums[i-1] = nums[i-1], nums[i]
                 left += 2
+                # right += 1
             else:
                 left += 2
                 right += 2
