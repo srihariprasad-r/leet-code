@@ -5,7 +5,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        nums.sort()
+        # nums.sort()
         st, rsum = 0, 0
 
         mlen = float('inf')
