@@ -1,5 +1,3 @@
-# submission has TLE
-
 class Solution(object):
     def findPairs(self, nums, k):
         """
@@ -11,33 +9,26 @@ class Solution(object):
 
         lst = []
 
-        i = 0
-        j = 1
         cnt = 0
 
-        while i < len(nums) and j < len(nums):
-            if k > 0 and nums[i] == nums[j]:
-                while nums[i] == nums[j]:
-                    j += 1
-                    if j > len(nums) - 1:
-                        i += 1
-                        j = i + 1
-            elif k == 0 and nums[i] == nums[j]:
-                if (nums[i], nums[j]) not in lst:
-                    lst.append((nums[i], nums[j]))
-                    cnt += 1
-                i += 1
-                j += 1
-            elif (nums[j] - nums[i] > k) or (nums[j] - nums[i] < k):
-                j += 1
-                if j > len(nums) - 1:
-                    i += 1
-                    j = i + 1
-            else:
-                if (nums[i], nums[j]) not in lst:
-                    lst.append((nums[i], nums[j]))
-                    cnt += 1
-                i += 1
-                j = i + 1
+        def ok(arr, low, target):
+            high = len(arr) - 1
+            while low <= high:
+                mid = low + (high-low)//2
+                if nums[mid] == target:
+                    return True
+                if nums[mid] < target:
+                    low = mid + 1
+                else:
+                    high = mid - 1
+
+            return False
+
+        for i in range(len(nums)):
+            if i > 0 and nums[i] - nums[i-1] == 0:
+                continue
+
+            if ok(nums, i + 1, nums[i] + k):
+                cnt += 1
 
         return cnt
