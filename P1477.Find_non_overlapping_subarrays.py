@@ -1,5 +1,3 @@
-# wrong submission
-
 class Solution(object):
     def minSumOfLengths(self, arr, target):
         """
@@ -7,24 +5,21 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        i, j, rsum = 0, 1, 0
-        res = []
+        st, csum = 0, 0
+        mins = [float('inf')] * len(arr)
+        val = float('inf')
 
-        while j < len(arr):
-            if arr[i] == target:
-                res.append([arr[i]])
+        for cur in range(len(arr)):
+            csum += arr[cur]
 
-            rsum += arr[j]
+            while st <= cur and csum > target:
+                csum -= arr[st]
+                st += 1
 
-            if rsum == target:
-                res.append([arr[i], arr[j]])
+            if csum == target:
+                if st > 0 and mins[st-1] != float('inf'):
+                    val = min(val, mins[st-1] + cur - st + 1)
+            mins[cur] = min(mins[cur-1], cur - st +
+                            1 if csum == target else float('inf'))
 
-            while rsum > target:
-                rsum -= arr[i]
-                i += 1
-
-            j += 1
-
-        arr = sorted(res, key=lambda x: len(x))
-
-        return -1 if len(res) < 2 else 2
+        return val if val != float('inf') else -1
