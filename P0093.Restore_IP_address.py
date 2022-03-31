@@ -17,9 +17,6 @@ class Solution(object):
             return True
 
         def helper(s, idx, dots, arr=[], res=[]):
-            if dots > 3 or idx >= len(s):
-                return
-
             if dots == 3:
                 if valid(s[idx:]):
                     arr.append('.' + s[idx:])
@@ -33,9 +30,9 @@ class Solution(object):
                     else:
                         tmp = str('.' + s[idx:i+1])
 
-                    arr.append(tmp)
-                    helper(s, i+1, dots + 1, arr, res)
-                    arr.pop()
+                    # arr.append(tmp)
+                    helper(s, i+1, dots + 1, arr + [tmp], res)
+                    # del arr[-1]
 
             return res
 
