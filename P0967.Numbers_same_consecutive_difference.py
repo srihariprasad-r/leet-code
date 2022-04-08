@@ -1,5 +1,3 @@
-# Wrong submission
-
 class Solution(object):
     def numsSameConsecDiff(self, n, k):
         """
@@ -9,30 +7,27 @@ class Solution(object):
         """
         def backtrack(idx, n, k, lst, res=[]):
             if len(lst) == n:
-                is_not_right_number = False
-                cur = 0
-                while not is_not_right_number:
-                    if cur < len(lst) -1:
-                        if abs(lst[cur]- lst[cur+1]) == k:
-                            continue
-                        else:
-                            is_not_right_number = True
-                            break
-                    cur += 1
-                if not is_not_right_number:
-                    el = int(''.join([str(i) for i in lst]))
-                    if el not in res:
-                        res.append(el)
-                        lst = []
-                    return
+                if lst[0] != 0:
+                    intEl = int(''.join([str(i) for i in lst]))
+                    if intEl not in res:
+                        res.append(intEl)
+                return res
             
-            for i in range(1, 10):
-                lst.append(i+1)
-                backtrack(i+1, n, k, lst, res)
+            el = lst[-1] 
+            
+            if el + k <= 9:
+                lst.append(el + k)
+                backtrack(idx, n, k, lst, res)
                 lst.pop()
-                
+
+            if el - k >= 0:
+                lst.append(el - k)
+                backtrack(idx, n, k, lst, res)
+                lst.pop()
+
             return res
         
-        curList = []
+        for i in range(10):
+            res = backtrack(i, n, k, [i])
 
-        return backtrack(1, n, k, curList)
+        return res
