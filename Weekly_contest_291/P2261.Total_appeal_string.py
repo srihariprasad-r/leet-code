@@ -1,3 +1,5 @@
+# TLE submission
+
 class Solution(object):
     def appealSum(self, s):
         """
@@ -13,8 +15,7 @@ class Solution(object):
             jump += 1
             for j in range(i, len(s)):
                 appeal_str += s[j:j+jump]
-                appeal_cnt.setdefault(
-                    len(set(appeal_str)), []).append(appeal_str)
+                appeal_cnt.setdefault(len(set(appeal_str)), []).append(appeal_str)
 
             jump = 0
 
