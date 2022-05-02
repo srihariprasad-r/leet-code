@@ -1,25 +1,18 @@
-# TLE submission
-
 class Solution(object):
     def appealSum(self, s):
         """
         :type s: str
         :rtype: int
         """
-        cum_cnt = 0
-        appeal_cnt = {}
-        jump = 0
-
+        n = len(s)
+        dp = [0] * (n+1) 
+        last_idx = [-1] * 26
+        ans = 0
+        
         for i in range(len(s)):
-            appeal_str = ''
-            jump += 1
-            for j in range(i, len(s)):
-                appeal_str += s[j:j+jump]
-                appeal_cnt.setdefault(len(set(appeal_str)), []).append(appeal_str)
-
-            jump = 0
-
-        for k, v in appeal_cnt.items():
-            cum_cnt += len(v)*k
-
-        return cum_cnt
+            c = ord(s[i]) - ord('a')
+            dp[i+1] = dp[i] +i - last_idx[c]
+            ans += dp[i+1]
+            last_idx[c] = i
+            
+        return ans
