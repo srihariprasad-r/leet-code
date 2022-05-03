@@ -1,3 +1,5 @@
+#TLE submission
+
 class Solution(object):
     def minimumAverageDifference(self, nums):
         """
