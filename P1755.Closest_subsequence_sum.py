@@ -29,6 +29,9 @@ class Solution(object):
             tgt = goal - s
             idx = bisect_left(sum2, tgt)
 
+            if idx < len(sum2):
+                ans = min(ans, abs(tgt-sum2[idx]))
+
             if idx > 0:
                 ans = min(ans, abs(tgt-sum2[idx-1]))
 
