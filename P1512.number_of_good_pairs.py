@@ -11,3 +11,20 @@ class Solution(object):
                     cnt += 1
         
         return cnt
+
+# Method 2
+class Solution(object):
+    def numIdenticalPairs(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        cnt = defaultdict(int)
+        
+        ans = 0
+        for num in nums:
+            if num in cnt:
+                ans += cnt[num]
+            cnt[num] += 1
+            
+        return ans
