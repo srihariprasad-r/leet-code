@@ -1,5 +1,3 @@
-#  Wrong submission
-
 class Solution(object):
     def subarraySum(self, nums, k):
         """
@@ -7,20 +5,19 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        prefix = [0] * (len(nums)+1)
-        map = {0:1}
+        prefix = [nums[0]]
+        map = defaultdict(int)
+        map[0] = 1
         sum = cnt = 0
-        
-        for idx, num in enumerate(nums):
-            sum += num
-            prefix[idx+1] = sum
 
-        for idx in range(1, len(prefix)):
-            if prefix[idx] - k in map:
-                map[prefix[idx]] += 1
-                cnt += map[prefix[idx]]
-            else:
-                map[prefix[idx]] += 1
+        for idx in range(1, len(nums)):
+            sum = nums[idx] + prefix[idx-1]
+            prefix.append(sum)
+
+        for idx, num in enumerate(prefix):
+            if num - k in map:
+                cnt += map[num-k]
+
+            map[num] += 1
 
         return cnt
-                
