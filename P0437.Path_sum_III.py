@@ -14,21 +14,26 @@ class Solution(object):
         self.result = 0
         self.sum_cnt = defaultdict(int)
         self.sum_cnt[0] = 1
-        
+
+        if not root:
+            return self.result
+
         def dfs(node, running_sum):
             if not node:
-                return self.result
-            
+                return
+
             running_sum += node.val
-            
+
             if (running_sum - targetSum) in self.sum_cnt:
                 self.result += self.sum_cnt[running_sum - targetSum]
-            
-            self.sum_cnt[running_sum- targetSum] += 1
-            
+
+            self.sum_cnt[running_sum] += 1
+
             dfs(node.left, running_sum)
             dfs(node.right, running_sum)
-            
+            # backtrack to remove sum collected
+            self.sum_cnt[running_sum] -= 1
+
             return self.result
-        
+
         return dfs(root, 0)
