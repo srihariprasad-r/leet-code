@@ -42,3 +42,37 @@ class Solution(object):
                 return []
             
         return sum(dfs(root, level + 1))                
+
+# Method 2
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+
+class Solution(object):
+    def deepestLeavesSum(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        dct = {}
+
+        q = deque()
+        q.append((root, 0))
+
+        while len(q) > 0:
+            el, lvl = q.popleft()
+
+            dct.setdefault(lvl, []).append(el.val)
+
+            if el.left:
+                q.append((el.left, lvl + 1))
+
+            if el.right:
+                q.append((el.right, lvl + 1))
+
+        return sum(dct[max(dct.keys())])
