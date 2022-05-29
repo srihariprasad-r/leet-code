@@ -13,3 +13,21 @@ class Solution(object):
                 max = prices[i] - min
         
         return max
+
+# Method 2
+
+
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        selling_price = 0
+        max_profit = 0
+
+        for i in range(len(prices)-1, -1, -1):
+            selling_price = max(selling_price, prices[i])
+            max_profit = max(max_profit, selling_price - prices[i])
+
+        return max_profit
