@@ -5,7 +5,8 @@ class Solution(object):
         :rtype: int
         """
         profit = 0
-        left = right = [0] * len(prices)
+        left = [0] * len(prices)
+        right = [0] * len(prices)
         minleft = prices[0]
 
         for i in range(1, len(prices)):
