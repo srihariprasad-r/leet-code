@@ -6,6 +6,8 @@ class Solution(object):
         :type special: List[int]
         :rtype: int
         """
+        special.sort()
+
         st = bottom
         end = top
         ans = 0
