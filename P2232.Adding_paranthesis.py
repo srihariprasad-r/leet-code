@@ -1,5 +1,3 @@
-# Wrong submission
-
 class Solution(object):
     def minimizeResult(self, expression):
         """
@@ -33,17 +31,17 @@ class Solution(object):
                 if len(n4Str) > 0:
                     n4 = int(n4Str)
 
-                cal = n1 * (n2*n3) * n4
+                cal = n1 * (n2+n3) * n4
                 if cal < preval:
                     preval = cal
                     st = i
                     end = j+1
 
         ans = ''
-        ans = expression[0:st]
+        ans += expression[0:st]
         ans += '('
-        ans += expression[st:end+1]
+        ans += expression[st:end]
         ans += ')'
-        ans += expression[end+1:]
+        ans += expression[end:]
 
         return ans
