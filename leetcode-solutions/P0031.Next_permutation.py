@@ -4,42 +4,31 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        alreadySorted = False
-        left = 0
-        right = 1
+        def reverse(l, r):
+            while l < r:
+                nums[l], nums[r] = nums[r], nums[l]
+                l += 1
+                r -= 1
+            return
         
-        while right < len(nums):
-            if nums[left] < nums[right]:
-                left += 1
-                right += 1
-            else:
+        n = len(nums)
+        ptr1 = float('inf')
+        
+        for i in range(n-1, 0, -1):
+            if nums[i] > nums[i-1]:
+                ptr1 = i - 1
                 break
-
-        prevLeft = left -1
-        prevRight = left
-        
-        newleft = left + 1 if right != len(nums) - 1 else len(nums) - 2
-        newright = right + 1 if right != len(nums) - 1 else len(nums) - 1
-
-        while newright < len(nums):
-            if nums[newleft] < nums[newright]:
-                alreadySorted = True
-                nums[newleft], nums[newright] = nums[newright], nums[newleft]
-                newleft += 1
-                newright += 1
-            else:
-                newright += 1
-        
-        if not alreadySorted:
-            nums[prevLeft], nums[prevRight] = nums[prevRight], nums[prevLeft]
-        
-            left = prevRight
-            right = len(nums) - 1
-        
-            while left != right:
-                if nums[left] > nums[right]:
-                    nums[left], nums[right] = nums[right], nums[left]
-                    left += 1
-                    right -= 1
-                else:
-                    right -= 1
+                
+        if ptr1 != float('inf'):
+            ptr2 = float('inf')
+            
+            for j in range(n-1, ptr1, -1):
+                if nums[j] > nums[ptr1]:
+                    ptr2 = j
+                    break
+                    
+            nums[ptr1], nums[ptr2] = nums[ptr2], nums[ptr1]
+            reverse(ptr1+1,n-1)
+            
+        else:
+            reverse(0, n-1)
