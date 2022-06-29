@@ -27,3 +27,33 @@ class Solution(object):
             ptr = ptr.right
             
         return tnode.right
+
+# Method 2
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def increasingBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        def dfs(root):
+            if root is None:
+                return []
+            
+            return dfs(root.left) + [root.val] + dfs(root.right)
+        
+        ans = cur = TreeNode(-1)
+        
+        for c in dfs(root):
+            cur.right = TreeNode(c)
+            cur = cur.right
+            
+        return ans.right
+            
+            
