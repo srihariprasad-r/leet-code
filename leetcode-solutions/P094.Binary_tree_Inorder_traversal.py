@@ -21,3 +21,40 @@ class Solution(object):
             return result
         
         return dfs(root)
+
+# Method 2
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def inorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if not root:
+            return []
+
+        ans = []
+        stck = [root]
+
+        el = stck[-1]
+
+        while el:
+            stck.append(el.left)
+            el = el.left
+
+        while stck:
+            el = stck.pop()
+            if el:
+                ans.append(el.val)
+            if el and el.right:
+                el = el.right
+                while el:
+                    stck.append(el)
+                    el = el.left
+
+        return ans
