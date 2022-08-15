@@ -1,5 +1,14 @@
 # wrong submission
 
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.count = 0
+        self.smallercnt = 0
+        self.left = None
+        self.right = None
+
+
 class Solution(object):
     def countSmaller(self, nums):
         """
@@ -7,18 +16,32 @@ class Solution(object):
         :rtype: List[int]
         """
         ans = [0] * len(nums)
-        stck = []
-        
+
+        def add(nums):
+            node = root
+            tsum = 0
+
+            while node.val != nums:
+                if node.val > nums:
+                    if not node.left:
+                        node.left = Node(nums)
+
+                    node.smallercnt += 1
+                    node = node.left
+                else:
+                    tsum += node.smallercnt + node.count
+                    if not node.right:
+                        node.right = Node(nums)
+
+                    # node.smallercnt += 1
+                    node = node.right
+
+            node.count += 1
+
+            return tsum + node.smallercnt
+
+        root = Node(nums[-1])
         for i in range(len(nums)-1, -1, -1):
-            cnt = 0
-            while stck and nums[i] <= stck[-1]:
-                stck.pop()
-                
-            if stck:
-                ans[i] = len(stck)
-            else:
-                ans[i] = 0
-                
-            stck.append(nums[i])
-        
+            ans[i] = add(nums[i])
+
         return ans
