@@ -1,3 +1,5 @@
+# TLE submission
+
 class Solution(object):
     def goodTriplets(self, nums1, nums2):
         """
