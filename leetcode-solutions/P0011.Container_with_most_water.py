@@ -1,5 +1,3 @@
-# TLE submission
-
 class Solution(object):
     def maxArea(self, height):
         """
@@ -7,10 +5,17 @@ class Solution(object):
         :rtype: int
         """
         res = 0
-        
-        for i in range(len(height) - 1):
-            for j in range(i+1, len(height)):
-                res = max(res, min(height[j], height[i]) * (j-i))
-                
-                
+        left = 0
+        right = len(height) - 1
+
+        while left <= right:
+            res = max(res, min(height[right], height[left]) * (right-left))
+
+            if height[left] < height[right]:
+                left += 1
+            elif height[left] > height[right]:
+                right -= 1
+            else:
+                left += 1
+
         return res
