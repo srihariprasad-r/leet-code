@@ -12,3 +12,26 @@ class Solution(object):
     
         return dp.get(n)
         
+# Method 2
+
+class Solution(object):
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        steps = 0
+        
+        def recursion(n):
+            if n < 0:
+                return 0
+            
+            if n == 0:
+                return 1
+            
+            ans = recursion(n-1) + recursion(n-2)
+        
+            return ans
+        
+        return recursion(n) 
+        
