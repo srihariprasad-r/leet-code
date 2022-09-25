@@ -20,3 +20,27 @@ class Solution(object):
             nums.append(el)
 
         return res
+
+# Method 2
+
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        arr = []
+        n = len(nums)
+
+        def dfs(idx):
+            if idx == n:
+                res.append(copy.deepcopy(nums))
+                return
+            
+            for i in range(idx, n):
+                nums[i], nums[idx] = nums[idx], nums[i]
+                dfs(idx+1) 
+                nums[i], nums[idx] = nums[idx], nums[i]
+                
+            return res
