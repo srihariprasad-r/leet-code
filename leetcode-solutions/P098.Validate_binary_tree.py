@@ -55,3 +55,22 @@ class Solution(object):
             return False
         
         return dfs(root, float('-inf'), float('inf'))
+
+
+# Method 3
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        def dfs(root, min, max):
+            if root is None:
+                return True
+            
+            if root.val <= min or root.val >= max:
+                return False
+            
+            return dfs(root.left, min, root.val) and dfs(root.right, root.val, max)
+        
+        return dfs(root, float('-inf'), float('inf'))
