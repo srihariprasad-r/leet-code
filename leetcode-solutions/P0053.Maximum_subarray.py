@@ -19,3 +19,20 @@ class Solution(object):
 
         return max(table_list)
         
+# Method 2
+
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        mx = float('-inf')
+        sum = 0
+        
+        for i in range(len(nums)):
+            sum += nums[i]
+            sum = max(sum, nums[i])
+            mx = max(mx, sum)
+            
+        return mx
