@@ -48,13 +48,14 @@ class Solution(object):
 
 # Method 2 - Code issue exists
 
+
 class Solution(object):
     def countSmaller(self, nums):
         """
         :type nums: List[int]
         :rtype: List[int]
         """
-        def merge(left, mid, right, arr, tmp):
+        def merge(left, mid, right, arr, tmp, res):
             i = left
             j = mid
             k = 0
@@ -68,6 +69,7 @@ class Solution(object):
                 else:
                     tmp[k] = arr[j]
                     cnt += 1
+                    res[j-i] = cnt
                     j += 1
                     k += 1
 
@@ -83,20 +85,17 @@ class Solution(object):
             for m in range(left, right):
                 arr[m] = tmp[m]
 
-            return cnt
+            return
 
-        def mergesort(left, right, arr, tmp, res):
+        def mergesort(left, right, arr, tmp, res=[]):
             mid = 0
             cnt = 0
             if right > left:
                 mid = (right + left) / 2
                 mergesort(left, mid, arr, tmp, res)
                 mergesort(mid+1, right, arr, tmp, res)
+                merge(left, mid+1, right, arr, tmp, res)
 
-                cnt += merge(left, mid+1, right, arr, tmp)
+            return res[::-1]
 
-                res.append(cnt)
-
-            return res[::-1] + [0]
-
-        return mergesort(0, len(nums)-1, nums, [-1]*len(nums), [])
+        return mergesort(0, len(nums)-1, nums, [-1]*len(nums), [0]*len(nums))
