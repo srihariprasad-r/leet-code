@@ -45,3 +45,58 @@ class Solution(object):
             ans[i] = add(nums[i])
 
         return ans
+
+# Method 2 - Code issue exists
+
+class Solution(object):
+    def countSmaller(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        def merge(left, mid, right, arr, tmp):
+            i = left
+            j = mid
+            k = 0
+            cnt = 0
+
+            while i < mid and j <= right:
+                if arr[i] <= arr[j]:
+                    tmp[k] = arr[i]
+                    i += 1
+                    k += 1
+                else:
+                    tmp[k] = arr[j]
+                    cnt += 1
+                    j += 1
+                    k += 1
+
+            while i < mid:
+                tmp[k] = arr[i]
+                i += 1
+                k += 1
+            while j <= right:
+                tmp[k] = arr[j]
+                j += 1
+                k += 1
+
+            for m in range(left, right):
+                arr[m] = tmp[m]
+
+            return cnt
+
+        def mergesort(left, right, arr, tmp, res):
+            mid = 0
+            cnt = 0
+            if right > left:
+                mid = (right + left) / 2
+                mergesort(left, mid, arr, tmp, res)
+                mergesort(mid+1, right, arr, tmp, res)
+
+                cnt += merge(left, mid+1, right, arr, tmp)
+
+                res.append(cnt)
+
+            return res[::-1] + [0]
+
+        return mergesort(0, len(nums)-1, nums, [-1]*len(nums), [])
