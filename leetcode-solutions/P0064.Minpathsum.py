@@ -48,3 +48,34 @@ class Solution(object):
                 else:
                     q.append((i_index+1, j_index, str(grid[i_index+1][j_index])+'->'+strn))
                     q.append((i_index, j_index+1, str(grid[i_index][j_index+1])+'->'+strn))
+
+
+# Method 2
+class Solution(object):
+    def minPathSum(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        def recursion(i, j, m, n, grid, dp):
+            if i == 0 and j == 0:
+                return grid[i][j]
+            
+            if i < 0 or i > m - 1 or j < 0 or j > n - 1:
+                return float('inf')
+            
+            if dp[i][j] > 0 : return dp[i][j]
+            
+            up = grid[i][j] + recursion(i-1, j, m, n, grid, dp)
+            left = grid[i][j] + recursion(i, j - 1, m, n, grid, dp)
+            
+            dp[i][j] = min(up, left)
+            
+            return dp[i][j]
+        
+        m = len(grid)
+        n = len(grid[0])
+        
+        dp = [[0 for _ in range(n+1)] for _ in range(m+1)]
+        
+        return recursion(m-1, n-1, m, n, grid, dp)
