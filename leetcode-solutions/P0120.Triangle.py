@@ -1,5 +1,3 @@
-# TLE
-
 class Solution(object):
     def minimumTotal(self, triangle):
         """
@@ -10,7 +8,7 @@ class Solution(object):
             if i == m - 1:
                 return triangle[i][j]
             
-            if dp[i][j] > 0: return dp[i][j]
+            if dp[i][j] > float('-inf'): return dp[i][j]
             
             down = triangle[i][j] + recursion(i+1, j, m, n, triangle, dp)
             right = triangle[i][j] + recursion(i+1, j + 1, m, n, triangle, dp)
@@ -21,6 +19,6 @@ class Solution(object):
         
         m = len(triangle)
                      
-        dp = [[0 for _ in range(m)] for _ in range(m)]
+        dp = [[float('-inf') for _ in range(m)] for _ in range(m)]
         
         return recursion(0, 0, m, m,  triangle, dp)
