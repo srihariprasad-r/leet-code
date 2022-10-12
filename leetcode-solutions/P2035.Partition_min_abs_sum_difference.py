@@ -9,7 +9,10 @@ class Solution(object):
         n = len(nums)
         target = sum([abs(num) for num in nums])
 
-        def recursion(idx, target, dp):
+        def recursion(idx, target, dp, msum):
+            if idx < 0 or target < 0 or target > msum:
+                return
+
             if idx == 0:
                 if nums[idx] == target:
                     return True
@@ -22,14 +25,14 @@ class Solution(object):
             if dp[idx][target] != -1:
                 return dp[idx][target]
 
-            not_take = recursion(idx-1, target, dp)
-            take = recursion(idx-1, target - nums[idx], dp)
+            not_take = recursion(idx-1, target, dp, msum)
+            take = recursion(idx-1, target - nums[idx], dp, msum)
 
             dp[idx][target] = take or not_take
 
             return dp[idx][target]
 
-        dp = [[-1 for _ in range(target+1)] for _ in range(n)]
+        dp = [[-1 for _ in range(target+1)] for _ in range(n+1)]
 
         for j in range(n):
             dp[j][0] = True
@@ -37,7 +40,7 @@ class Solution(object):
         dp[0][0] = True
 
         for i in range(1, target+1):
-            recursion(n-1, i, dp)
+            recursion(n-1, i, dp, target)
 
         min_diff = float('inf')
 
