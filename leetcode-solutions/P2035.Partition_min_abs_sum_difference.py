@@ -49,3 +49,45 @@ class Solution(object):
                 min_diff = min(min_diff, abs(target - i) - i)
 
         return min_diff
+
+
+# wrong submission
+class Solution(object):
+    def minimumDifference(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        ans = float('inf')
+        total = sum(nums)
+        half = total//2
+        
+        def dfs(idx, csum, lst, arr):
+            if idx == len(lst):
+                arr.append(csum)
+                return
+            
+            dfs(idx+1, csum, lst, arr)
+            dfs(idx+1, csum+lst[idx], lst, arr)
+            
+            return
+        
+        sum1 = []
+        sum2 = []
+        n = len(nums)
+        dfs(0, 0, nums[0:n//2], sum1)
+        dfs(0, 0, nums[n//2:], sum2)
+        
+        sum2.sort()
+        
+        for s in sum1:
+            remain = half - s
+            p = bisect.bisect_left(sum2, remain)
+            for i in [p, p-1]:
+                if 0 <= i < len(sum2):
+                    left = s + sum2[i]
+                    right = total - left
+                    diff = abs(left - right)
+                    ans = min(ans, diff) 
+                    
+        return ans
