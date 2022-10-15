@@ -61,33 +61,39 @@ class Solution(object):
         ans = float('inf')
         total = sum(nums)
         half = total//2
-        
+
         def dfs(idx, csum, lst, arr):
             if idx == len(lst):
                 arr.append(csum)
                 return
-            
+
             dfs(idx+1, csum, lst, arr)
             dfs(idx+1, csum+lst[idx], lst, arr)
-            
+
             return
-        
+
         sum1 = []
         sum2 = []
         n = len(nums)
+        N = n//2
         dfs(0, 0, nums[0:n//2], sum1)
         dfs(0, 0, nums[n//2:], sum2)
-        
-        sum2.sort()
-        
-        for s in sum1:
-            remain = half - s
-            p = bisect.bisect_left(sum2, remain)
-            for i in [p, p-1]:
-                if 0 <= i < len(sum2):
-                    left = s + sum2[i]
-                    right = total - left
-                    diff = abs(left - right)
-                    ans = min(ans, diff) 
-                    
+
+        ans = abs(sum(sum1) - sum(sum2))
+
+        for m in range(1, n):
+            left = sum1[:m+1]
+            right = sum2[N-m:]
+            right.sort()
+
+            for s in left:
+                remain = half - s
+                p = bisect.bisect_left(right, remain)
+                for i in [p, p-1]:
+                    if 0 <= i < len(right):
+                        l = s + right[i]
+                        r = total - l
+                        diff = abs(l - r)
+                        ans = min(ans, diff)
+
         return ans
