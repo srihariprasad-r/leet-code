@@ -14,3 +14,26 @@ class Solution(object):
         
     
         return res
+
+# Method 2 - wrong submission
+
+class Solution(object):
+    def dailyTemperatures(self, temperatures):
+        """
+        :type temperatures: List[int]
+        :rtype: List[int]
+        """
+        stck = [0]* len(temperatures)
+        
+        for i in range(len(temperatures)-1):
+            j = i + 1
+            if temperatures[i] == temperatures[j]:
+                continue
+            while j < len(temperatures):
+                if temperatures[i] < temperatures[j]:
+                    stck[i] = j-i
+                    break
+                j += 1
+
+                
+        return stck
