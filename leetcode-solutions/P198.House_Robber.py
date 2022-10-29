@@ -21,3 +21,30 @@ class Solution(object):
                 
         #print(dp)        
         return dp[-1]
+
+# Method 2
+class Solution(object):
+    def rob(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        def dfs(idx, dp):
+            if idx == len(nums):
+                return 0
+
+            if idx > len(nums):
+                return 0
+
+            if dp[idx] != -1:
+                return dp[idx]
+
+            take = nums[idx] + dfs(idx+2, dp)
+            not_take = dfs(idx+1, dp)
+
+            dp[idx] = max(take, not_take)
+
+            return dp[idx]
+
+        dp = [-1] * len(nums)
+        return dfs(0, dp)
