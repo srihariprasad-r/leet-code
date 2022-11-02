@@ -7,16 +7,14 @@ class Solution(object):
         :type wordDict: List[str]
         :rtype: bool
         """
-        cnt = defaultdict(int)
-        
-        for i in range(len(s)-1, -1, -1):
-            for w in wordDict:
-                if s[i:i+len(w)] == w:
-                    cnt[w] += 1
-                    break
-
-        for w in wordDict:
-            if w not in cnt.keys():
-                return False
+        def f(st):
+            if len(st) == 0:
+                return True
             
-        return True
+            for i in range(1, len(st)+1):
+                if st[0:i+1] in wordDict and f(st[i+1:]):
+                    return True
+
+            return False
+        
+        return f(s)
