@@ -1,5 +1,3 @@
-# wrong submission
-
 class Solution(object):
     def wordBreak(self, s, wordDict):
         """
@@ -7,14 +5,18 @@ class Solution(object):
         :type wordDict: List[str]
         :rtype: bool
         """
-        def f(st):
-            if len(st) == 0:
-                return True
+        def f(s):
+            n = len(s)
             
-            for i in range(1, len(st)+1):
-                if st[0:i+1] in wordDict and f(st[i+1:]):
-                    return True
-
-            return False
+            dp = [False] * (n+1)
+            
+            dp[0] = True
+            
+            for i in range(1, n+1):
+                for j in range(i):
+                    if dp[j] and s[j:i] in wordDict:
+                        dp[i] = True
+                        
+            return dp[n]
         
         return f(s)
