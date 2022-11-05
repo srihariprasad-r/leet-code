@@ -28,3 +28,32 @@ class Solution(object):
                     break
                     
         return dp[0][len(s)-1]
+
+# Method 2
+
+class Solution:
+    def longestPalindromeSubseq(self, s: str) -> int:
+        def dfs(st, end, dp):
+            if st > end:
+                return 0
+            
+            # if st == end:
+            #     return 1
+            
+            if dp[st][end] > 0: return dp[st][end]
+            
+            if s[st] == s[end]:
+                dp[st][end] = 2 + dfs(st+1, end - 1, dp)
+            else:
+                dp[st][end] = max(dfs(st, end-1, dp), dfs(st+1, end, dp))
+            
+            return dp[st][end]
+            
+        dp = [[0 for _ in range(len(s))] for _ in range(len(s))]
+        
+        for i in range(len(s)):
+            for j in range(len(s)):
+                if i == j:
+                    dp[i][j] = 1
+                    
+        return dfs(0, len(s)-1, dp)
