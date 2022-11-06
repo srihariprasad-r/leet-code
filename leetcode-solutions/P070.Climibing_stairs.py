@@ -35,3 +35,24 @@ class Solution(object):
         
         return recursion(n) 
         
+# Method 3
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        def dfs(m, dp):
+            if m < 0:
+                return 0
+
+            if m == 0:
+                dp[m] = 1
+                return dp[m]
+
+            if dp[m] > 0:
+                return dp[m]
+
+            dp[m] += dfs(m-2, dp) + dfs(m-1, dp)
+
+            return dp[m]
+
+        dp = [0 for _ in range(n+1)]
+
+        return dfs(n, dp)
