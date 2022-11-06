@@ -19,3 +19,25 @@ class Solution(object):
         else:
             return dp[amount]
             
+# Method 2 - TLE
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        n = len(coins)
+
+        def dfs(idx, c, t):
+            if idx > n or t > amount:
+                return float('inf')
+
+            if t == amount:
+                return c
+
+            res = float('inf')
+
+            for i in range(idx, n):
+                res = min(res, min(dfs(i, c+1, t+coins[i]), dfs(i+1, c, t)))
+
+            return res
+
+        o = dfs(0, 0, 0)
+
+        return -1 if o == float('inf') else o
