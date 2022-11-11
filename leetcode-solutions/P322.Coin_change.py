@@ -20,38 +20,27 @@ class Solution(object):
             return dp[amount]
             
 # Method 2 - wrong submission
+
+
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        n = len(coins)
+        if amount == 0:
+            return 0
 
-        def dfs(idx, c, t, dp, a=[]):
-            if idx > n or t < 0:
-                return float('inf')
+        if len(coins) == 1 and ((amount % coins[-1] == 1)
+                                or (coins[-1] % amount == 1)):
+            return -1
 
-            if t == 0:
-                dp[idx] = c
-                return c
+        dp = [[0 for _ in range(amount+1)] for _ in range(len(coins))]
 
-            if dp[idx] > 0:
-                return dp[idx]
+        for i in range(len(coins)):
+            include = float('inf')
+            exclude = float('inf')
+            for j in range(1, amount+1):
+                if j >= coins[i]:
+                    include = 1 + dp[i][j-coins[i]]
+                if i > 0:
+                    exclude = dp[i-1][j]
+                dp[i][j] = min(include, exclude)
 
-            res = float('inf')
-            take = float('inf')
-            no_take = float('inf')
-
-            for i in range(idx, n):
-                if t >= coins[idx]:
-                    take = dfs(idx, c+1, t-coins[idx], dp, a + [coins[idx]])
-                no_take = dfs(idx+1, c, t, dp, a)
-
-            res = min(take, no_take)
-
-            dp[idx] = res
-
-            return dp[idx]
-
-        dp = [0] * (amount+1)
-
-        o = dfs(0,  0, amount, dp)
-
-        return -1 if o == float('inf') else o
+        return dp[-1][-1]
