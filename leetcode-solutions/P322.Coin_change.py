@@ -6,32 +6,31 @@ class Solution(object):
         :rtype: int
         """
         dp = [amount + 1 for i in range(amount+1)]
-        
+
         dp[0] = 0
-        
+
         for i in range(1, len(dp)):
             for j in range(len(coins)):
                 if coins[j] <= i:
                     dp[i] = min(dp[i], dp[i-coins[j]] + 1)
-                    
+
         if amount < dp[-1]:
             return -1
         else:
             return dp[amount]
-            
+
 # Method 2 - wrong submission
 
 
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        if amount == 0:
+        if len(coins) == 0 or amount <= 0:
             return 0
 
-        if len(coins) == 1 and ((amount % coins[-1] == 1)
-                                or (coins[-1] % amount == 1)):
-            return -1
+        dp = [[-1 for _ in range(amount+1)] for _ in range(len(coins))]
 
-        dp = [[0 for _ in range(amount+1)] for _ in range(len(coins))]
+        for i in range(len(coins)):
+            dp[i][0] = 0
 
         for i in range(len(coins)):
             include = float('inf')
