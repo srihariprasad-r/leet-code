@@ -36,8 +36,7 @@ class Solution:
             dp[idx][i][j] = dfs(idx+1, i, j, dp)
 
             if i - cnt_i >= 0 and j - cnt_j >= 0:
-                dp[idx][i][j] = 1 + \
-                    max(dp[idx][i][j], dfs(idx+1, i - cnt_i, j - cnt_j, dp))
+                dp[idx][i][j] = max(dp[idx][i][j], 1 + dfs(idx+1, i - cnt_i, j - cnt_j, dp))
 
             return dp[idx][i][j]
 
