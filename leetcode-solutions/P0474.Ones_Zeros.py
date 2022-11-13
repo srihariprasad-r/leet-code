@@ -1,42 +1,46 @@
-# wrong submission
+# TLE
 
 class Solution:
     def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
-        def dfs(idx, s, i, j, res):
-            if idx >= len(s):
-                return res, i, j
-            
-            ans = 0   
-                
-            if idx < len(s):
-                if s[idx] == '0' and i < m: 
-                    i += 1
-                    res += 1
-                elif s[idx] == '1' and j < n: 
-                    j += 1
-                    res += 1
-                else:
-                    res = float('inf')
-                ans, res_i, res_j = dfs(idx+1, s, i , j, res)
-            
-            return ans, res_i, res_j
-        
-        less = 0
-        eql = 0
-        more = 0
-        
-        for i in range(len(strs)):
-            a, ans_i, ans_j = dfs(0, strs[i], 0, 0, 0)
+        def dfs(idx, i, j):
+            if idx == len(strs):
+                return 0
 
-            if a != float('inf'):
-                if ans_i < m or ans_j < n:
-                    less += 1
-                elif ans_i == m or ans_j == n:
-                    eql += 1
-                else:
-                    more += 1
+            take = float('-inf')
+            no_take = float('-inf')
 
-        if less > eql: 
-            return less
-        else:
-            return eql
+            cnt_i = strs[idx].count('0')
+            cnt_j = strs[idx].count('1')
+            if i - cnt_i >= 0 and j - cnt_j >= 0:
+                take = 1 + dfs(idx+1, i - cnt_i, j - cnt_j)
+            no_take = dfs(idx+1, i, j)
+
+            return max(take, no_take)
+
+        return dfs(0, m, n)
+
+# DP - wrong submission
+
+class Solution:
+    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        def dfs(idx, i, j, dp):
+            if idx == len(strs):
+                return 0
+
+            if dp[idx][i][j] > 0:
+                return dp[idx][i][j]
+
+            cnt_i = strs[idx].count('0')
+            cnt_j = strs[idx].count('1')
+
+            dp[idx][i][j] = dfs(idx+1, i, j, dp)
+
+            if i - cnt_i >= 0 and j - cnt_j >= 0:
+                dp[idx][i][j] = 1 + \
+                    max(dp[idx][i][j], dfs(idx+1, i - cnt_i, j - cnt_j, dp))
+
+            return dp[idx][i][j]
+
+        dp = [[[0]*(n+1)]*(m+1)]*(len(strs)+1)
+
+        return dfs(0, m, n, dp)
