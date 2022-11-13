@@ -4,7 +4,7 @@ class Solution:
     def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
         def dfs(idx, s, i, j, res):
             if idx >= len(s):
-                return res
+                return res, i, j
             
             ans = 0   
                 
@@ -17,14 +17,26 @@ class Solution:
                     res += 1
                 else:
                     res = float('inf')
-                ans += dfs(idx+1, s, i , j, res)
+                ans, res_i, res_j = dfs(idx+1, s, i , j, res)
             
-            return ans
+            return ans, res_i, res_j
         
-        o = []
+        less = 0
+        eql = 0
+        more = 0
         
         for i in range(len(strs)):
-            a = dfs(0, strs[i], 0, 0, 0)
-            if a != float('inf'): o.append(a)
-            
-        return len(o)
+            a, ans_i, ans_j = dfs(0, strs[i], 0, 0, 0)
+
+            if a != float('inf'):
+                if ans_i < m or ans_j < n:
+                    less += 1
+                elif ans_i == m or ans_j == n:
+                    eql += 1
+                else:
+                    more += 1
+
+        if less > eql: 
+            return less
+        else:
+            return eql
