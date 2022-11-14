@@ -21,25 +21,27 @@ class Solution:
 
 # DP - wrong submission
 
+
 class Solution:
     def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
         def dfs(idx, i, j, dp):
             if idx == len(strs):
                 return 0
 
-            if dp[idx][i][j] > 0:
-                return dp[idx][i][j]
+            y = (idx, i, j)
+            if y in dp:
+                return dp[y]
 
             cnt_i = strs[idx].count('0')
             cnt_j = strs[idx].count('1')
 
-            dp[idx][i][j] = dfs(idx+1, i, j, dp)
+            dp[y] = dfs(idx+1, i, j, dp)
 
             if i - cnt_i >= 0 and j - cnt_j >= 0:
-                dp[idx][i][j] = max(dp[idx][i][j], 1 + dfs(idx+1, i - cnt_i, j - cnt_j, dp))
+                dp[y] = max(dp[y], 1 + dfs(idx+1, i - cnt_i, j - cnt_j, dp))
 
-            return dp[idx][i][j]
+            return dp[y]
 
-        dp = [[[0]*(n+1)]*(m+1)]*(len(strs)+1)
+        dp = {}
 
         return dfs(0, m, n, dp)
