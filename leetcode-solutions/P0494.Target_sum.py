@@ -18,31 +18,29 @@ class Solution:
         return dfs(0, 0)
 
 
-# DP - memo fails
+# DP - memo
 
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
         n = len(nums)
 
         def dfs(idx, s, dp):
-            if s < 0 or s > target:
-                return 0
-
             if idx >= n:
                 if s == target:
-                    dp[idx][s] = 1
                     return 1
-                else:
-                    return 0
+                return 0
 
-            if dp[idx][s] != 0:
-                return dp[idx][s]
+            key = (idx, s)
+            if key in dp:
+                return dp[key]
 
-            dp[idx][s] = dfs(idx+1, s + nums[idx], dp) + \
-                dfs(idx+1, s - nums[idx], dp)
+            take = dfs(idx+1, s + nums[idx], dp)
+            no_take = dfs(idx+1, s - nums[idx], dp)
 
-            return dp[idx][s]
+            dp[key] = take + no_take
 
-        dp = [[0 for _ in range(target+1)] for _ in range(len(nums)+1)]
+            return dp[key]
+
+        dp = {}
 
         return dfs(0, 0, dp)
