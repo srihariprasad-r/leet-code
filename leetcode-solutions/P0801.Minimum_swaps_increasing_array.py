@@ -38,6 +38,7 @@ class Solution:
             no_take = float('inf')
             
             if nums1[idx] <= nums1[idx-1] or nums2[idx] <= nums2[idx-1]:
+                nums1[idx-1], nums2[idx] = nums2[idx], nums1[idx-1]
                 take = 1 + dfs(idx-1)
             else:
                 no_take = dfs(idx-1)
