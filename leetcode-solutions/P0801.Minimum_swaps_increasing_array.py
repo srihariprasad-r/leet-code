@@ -24,3 +24,24 @@ class Solution(object):
 
         n = len(nums1)
         return backtrack(1, n, 0)
+
+
+# wrong submission
+
+class Solution:
+    def minSwap(self, nums1: List[int], nums2: List[int]) -> int:
+        def dfs(idx):
+            if idx <= 0:
+                return 0
+            
+            take = float('inf')
+            no_take = float('inf')
+            
+            if nums1[idx] <= nums1[idx-1] or nums2[idx] <= nums2[idx-1]:
+                take = 1 + dfs(idx-1)
+            else:
+                no_take = dfs(idx-1)
+            
+            return min(take, no_take)
+        
+        return dfs(len(nums1)-1)
