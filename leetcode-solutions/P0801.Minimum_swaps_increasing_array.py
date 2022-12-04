@@ -30,19 +30,28 @@ class Solution(object):
 
 class Solution:
     def minSwap(self, nums1: List[int], nums2: List[int]) -> int:
-        def dfs(idx):
-            if idx <= 0:
-                return 0
-            
+        def dfs(idx, dp, ans=0):
+            if idx >= len(nums1):
+                return ans
+
+            if dp[idx] > -1:
+                return dp[idx]
+
             take = float('inf')
             no_take = float('inf')
-            
-            if nums1[idx] <= nums1[idx-1] or nums2[idx] <= nums2[idx-1]:
-                nums1[idx-1], nums2[idx] = nums2[idx], nums1[idx-1]
-                take = 1 + dfs(idx-1)
-            else:
-                no_take = dfs(idx-1)
-            
-            return min(take, no_take)
-        
-        return dfs(len(nums1)-1)
+
+            if nums1[idx] > nums1[idx-1] and nums2[idx] > nums2[idx-1]:
+                no_take = dfs(idx+1, dp, ans)
+
+            if nums1[idx] > nums2[idx-1] and nums2[idx] > nums1[idx-1]:
+                nums1[idx], nums2[idx] = nums2[idx], nums1[idx]
+                take = dfs(idx+1, dp, ans + 1)
+                nums1[idx], nums2[idx] = nums2[idx], nums1[idx]
+
+            dp[idx] = min(take, no_take)
+
+            return dp[idx]
+
+        dp = [-1 for _ in range(len(nums1))]
+        dfs(1, dp)
+        return dp[-1]
