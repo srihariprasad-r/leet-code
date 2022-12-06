@@ -26,16 +26,19 @@ class Solution(object):
         return backtrack(1, n, 0)
 
 
-# wrong submission
-
+# DP - memo
 class Solution:
     def minSwap(self, nums1: List[int], nums2: List[int]) -> int:
+        # need to add -1 to front of 2 lists
+        nums1.insert(0, -1)
+        nums2.insert(0, -1)
+
         def dfs(idx, dp, swapped):
             if idx == len(nums1):
                 return 0
 
-            if dp[swapped][idx] > -1:
-                return dp[swapped][idx]
+            if dp[idx][swapped] != -1:
+                return dp[idx][swapped]
             res = float('inf')
 
             prev1 = nums1[idx-1]
@@ -50,8 +53,8 @@ class Solution:
             if nums1[idx] > prev2 and nums2[idx] > prev1:
                 res = min(res, 1 + dfs(idx+1, dp, 1))
 
-            dp[swapped][idx] = res
-            return dp[swapped][idx]
+            dp[idx][swapped] = res
+            return dp[idx][swapped]
 
-        dp = [[-1 for _ in range(len(nums1))] for _ in range(2)]
+        dp = [[-1 for _ in range(2)] for _ in range(len(nums1))]
         return dfs(1, dp, 0)
