@@ -30,28 +30,28 @@ class Solution(object):
 
 class Solution:
     def minSwap(self, nums1: List[int], nums2: List[int]) -> int:
-        def dfs(idx, dp, ans=0):
-            if idx >= len(nums1):
-                return ans
+        def dfs(idx, dp, swapped):
+            if idx == len(nums1):
+                return 0
 
-            if dp[idx] > -1:
-                return dp[idx]
+            if dp[swapped][idx] > -1:
+                return dp[swapped][idx]
+            res = float('inf')
 
-            take = float('inf')
-            no_take = float('inf')
+            prev1 = nums1[idx-1]
+            prev2 = nums2[idx-1]
 
-            if nums1[idx] > nums1[idx-1] and nums2[idx] > nums2[idx-1]:
-                no_take = dfs(idx+1, dp, ans)
+            if swapped:
+                prev1, prev2 = prev2, prev1
 
-            if nums1[idx] > nums2[idx-1] and nums2[idx] > nums1[idx-1]:
-                nums1[idx], nums2[idx] = nums2[idx], nums1[idx]
-                take = dfs(idx+1, dp, ans + 1)
-                nums1[idx], nums2[idx] = nums2[idx], nums1[idx]
+            if nums1[idx] > prev1 and nums2[idx] > prev2:
+                res = dfs(idx+1, dp, 0)
 
-            dp[idx] = min(take, no_take)
+            if nums1[idx] > prev2 and nums2[idx] > prev1:
+                res = min(res, 1 + dfs(idx+1, dp, 1))
 
-            return dp[idx]
+            dp[swapped][idx] = res
+            return dp[swapped][idx]
 
-        dp = [-1 for _ in range(len(nums1))]
-        dfs(1, dp)
-        return dp[-1]
+        dp = [[-1 for _ in range(len(nums1))] for _ in range(2)]
+        return dfs(1, dp, 0)
