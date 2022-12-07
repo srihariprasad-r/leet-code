@@ -34,3 +34,29 @@ class Solution:
         dp = [0 for _ in range(n)]
 
         return min(dfs(0, 0, dp), dfs(1, 0, dp))
+
+# slight changes to above solution
+"""
+replaced function arguments as they were not readable
+"""
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        n = len(cost)
+
+        def dfs(idx, dp):
+            if idx >= len(cost):
+                return 0
+
+            if dp[idx] > -1:
+                return dp[idx]
+
+            one = cost[idx] + dfs(idx+1, dp)
+            two = cost[idx] + dfs(idx+2, dp)
+
+            dp[idx] = min(one, two)
+
+            return dp[idx]
+
+        dp = [-1 for _ in range(n)]
+        return min(dfs(0, dp), dfs(1, dp))
