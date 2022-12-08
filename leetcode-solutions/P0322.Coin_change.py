@@ -43,3 +43,33 @@ class Solution:
                 dp[i][j] = min(include, exclude)
 
         return dp[-1][-1]
+
+# Method 3 - wrong submission
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        if amount == 0: return 0
+        
+        def dfs(idx, amt, dp):
+            if idx == len(coins): 
+                if amt < 0 or amt > 0 : return float('inf')
+                return 0
+    
+            if dp[amt] > -1: return dp[amt] 
+
+            if amt == 0: return 0
+            if amt < 0: return float('inf')
+
+            take = float('inf')
+            no_take = float('inf')
+
+            if coins[idx] <= amt:
+                take = 1 + dfs(idx, amt - coins[idx], dp)
+            no_take = dfs(idx+1, amt, dp)
+
+            dp[amt]  = min(take, no_take)
+            return dp[amt] 
+
+        dp = [-1 for _ in range(amount+1)]
+        dfs(0, amount, dp)
+        return -1 if dp[-1] == float('inf') else dp[-1]
