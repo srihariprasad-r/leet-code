@@ -44,3 +44,26 @@ class Solution(object):
                 nums[i], nums[idx] = nums[idx], nums[i]
                 
             return res
+
+# Method 3
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        def dfs(fq, arr, res):
+            if len(arr) == len(nums):
+                if arr not in res:
+                    res.append(copy.deepcopy(arr))
+                return
+
+            for i in range(len(nums)):
+                if not fq[nums[i]]:
+                    arr.append(nums[i])
+                    fq[nums[i]] = 1
+                    dfs(fq, arr, res)
+                    arr.pop()
+                    fq[nums[i]] = 0
+
+            return res
+
+        fq = dict.fromkeys(nums, 0)
+        return dfs(fq, [], [])
