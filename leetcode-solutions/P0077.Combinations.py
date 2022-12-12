@@ -18,3 +18,24 @@ class Solution(object):
             return res
 
         return dfs(1)
+
+# Method 2 - similar to above
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        def dfs(idx, arr, res):
+            if len(arr) == k:
+                if arr not in res:
+                    res.append(copy.deepcopy(arr))
+
+                return
+
+            for i in range(idx, n+1):
+                if i not in arr:
+                    arr.append(i)
+                    dfs(i+1, arr, res)
+                    arr.pop()
+
+            return res
+        
+        return dfs(1, [], [])
