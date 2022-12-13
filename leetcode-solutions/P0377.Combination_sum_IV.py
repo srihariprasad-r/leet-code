@@ -26,22 +26,28 @@ class Solution(object):
         
         return dfs([], target)
 
-# Method 2 - TLE
+# Method 2
+
 
 class Solution:
     def combinationSum4(self, nums: List[int], target: int) -> int:
-        def dfs(s):
+        def dfs(s, dp):
             if s == target:
                 return 1
 
             if s > target:
                 return 0
 
+            if dp[s] > -1:
+                return dp[s]
+
             ans = 0
             for num in nums:
                 if s + num <= target:
-                    ans += dfs(s + num)
+                    ans += dfs(s + num, dp)
+                    dp[s] = ans
 
             return ans
 
-        return dfs(0)
+        dp = [-1] * (target+1)
+        return dfs(0, dp)
