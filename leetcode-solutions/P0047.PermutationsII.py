@@ -82,7 +82,7 @@ class Solution(object):
                 
             return permutation(mp, nums, res, i)
 
-# Method 3 - TLE  
+# Method 3 
 
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
@@ -91,15 +91,16 @@ class Solution:
                 if arr not in res: res.append(copy.deepcopy(arr))
                 return
 
-            for num in nums:
-                if fq[num]:
-                    fq[num] -= 1
-                    arr.append(num)
-                    dfs(fq, arr, res)
-                    arr.pop()
-                    fq[num] += 1
+            for i in range(len(nums)):
+                if fq[i]: continue
+                if i > 0 and nums[i] == nums[i-1] and not fq[i-1]: continue
+                fq[i] = True
+                arr.append(nums[i])
+                dfs(fq, arr, res)
+                arr.pop()
+                fq[i] = False
 
             return res
 
-        fq = Counter(nums)
+        fq = [False] * (len(nums))
         return dfs(fq, [],[])
