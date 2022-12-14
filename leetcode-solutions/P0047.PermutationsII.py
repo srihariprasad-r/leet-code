@@ -81,4 +81,25 @@ class Solution(object):
                 continue
                 
             return permutation(mp, nums, res, i)
-                
+
+# Method 3 - TLE  
+
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        def dfs(fq, arr, res):
+            if len(arr) == len(nums):
+                if arr not in res: res.append(copy.deepcopy(arr))
+                return
+
+            for num in nums:
+                if fq[num]:
+                    fq[num] -= 1
+                    arr.append(num)
+                    dfs(fq, arr, res)
+                    arr.pop()
+                    fq[num] += 1
+
+            return res
+
+        fq = Counter(nums)
+        return dfs(fq, [],[])
