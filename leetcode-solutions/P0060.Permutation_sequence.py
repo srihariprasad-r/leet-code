@@ -26,3 +26,23 @@ class Solution:
             if cnt == k-1:
                 return ''.join(res[cnt])
             cnt += 1
+
+# Method 2:
+
+class Solution:
+    def getPermutation(self, n: int, k: int) -> str:
+        f = 1
+        arr = [0]
+        for i in range(1, n+1):
+            f = f * i
+            arr.append(i)
+
+        k -= 1
+        ans = ''
+        while len(arr) > 0:
+            ans += str(arr[k//f])
+            arr.remove(arr[k//f])
+            k = k % f
+            if arr: f = f // len(arr)
+
+        return ans[1:]
