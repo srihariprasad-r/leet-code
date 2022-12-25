@@ -31,3 +31,18 @@ class Solution:
             res.append(v)
 
         return res
+
+# Method 2
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        res = []
+        mp = defaultdict(list)
+
+        for s in strs:
+            arr = [0] * 26
+            for c in s:
+                arr[ord(c) - ord('a')] += 1
+            mp[tuple(arr)].append(s)
+
+        return mp.values()
