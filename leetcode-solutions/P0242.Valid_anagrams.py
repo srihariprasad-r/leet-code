@@ -30,3 +30,19 @@ class Solution(object):
             j += 1
 
         return True if len(dct) == 0 else False
+
+# Method 2
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t): return False
+
+        mp = Counter(s)
+
+        for c in t:
+            if c in mp:
+                mp[c] -= 1
+                if not mp[c]:
+                    del mp[c]
+
+        return True if not mp else False
