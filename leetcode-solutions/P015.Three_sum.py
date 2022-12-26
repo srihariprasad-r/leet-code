@@ -66,21 +66,28 @@ class Solution(object):
                     
         return res
 
-# Method 3 - wrong submission
+# Method 3 - slight variation to above method
+
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+
         csum = 0
         res = set()
         for i in range(len(nums)-2):
-            csum = nums[i]
             j = i + 1
-            k = j + 1
-            while j < len(nums) and k < len(nums):
-                if nums[i] + nums[j] + nums[k] == 0:
+            k = len(nums) - 1
+            while j < len(nums) - 1 and k > j:
+                csum = nums[i] + nums[j] + nums[k]
+                if csum == 0:
                     lst = [nums[i], nums[j], nums[k]]
                     res.add(tuple(lst))
-                j += 1
-                k += 1
+                    j += 1
+                    k -= 1
+                elif csum < 0:
+                    j += 1
+                else:
+                    k -= 1
 
         return list(res)
