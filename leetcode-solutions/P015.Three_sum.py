@@ -66,7 +66,7 @@ class Solution(object):
                     
         return res
 
-# Method 3
+# Method 3 - wrong submission
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
