@@ -37,3 +37,17 @@ class Solution(object):
 
                 
         return stck
+
+# Method 3
+
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        s = []
+        ans = [0] * len(temperatures)
+        for i in range(len(temperatures)-1, -1, -1):
+            while s and s[-1][1] <= temperatures[i]:
+                s.pop()
+            ans[i] = 0 if not s else s[-1][0] - i
+            s.append((i, temperatures[i]))
+
+        return ans

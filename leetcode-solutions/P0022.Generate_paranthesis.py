@@ -2,6 +2,7 @@ class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         s = []
         res = []
+
         def dfs(open, close):
             if open == close and close == n:
                 res.append(''.join(copy.deepcopy(s)))
@@ -11,7 +12,7 @@ class Solution:
                 s.append('(')
                 dfs(open + 1, close)
                 s.pop()
-            
+
             if close < open:
                 s.append(')')
                 dfs(open, close + 1)
