@@ -17,6 +17,7 @@ class Solution:
             elif nums[i] == 2:
                 nums[i], nums[r] = nums[r], nums[i]
                 r -= 1
+                i -= 1   # need this for nums[i] == 1
             i += 1
 
         return nums
