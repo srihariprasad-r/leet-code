@@ -32,3 +32,25 @@ class Solution:
                     k += 1
 
         return len(st)
+
+# Method 2 
+
+class Solution:
+    def countPalindromicSubsequence(self, s: str) -> int:
+        mp = Counter(s)
+        cnt = 0
+        res = set()
+        left = set()
+
+        for i in range(len(s)):
+            mp[s[i]] -= 1
+            if mp[s[i]] == 0: del mp[s[i]]
+
+            for c in range(26):
+                if chr(c + ord('a')) in left and chr(c + ord('a')) in mp:
+                    res.add((s[i], chr(c + ord('a'))))
+
+            left.add(s[i])
+
+        return len(res)
+
