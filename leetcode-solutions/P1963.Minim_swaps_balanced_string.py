@@ -2,16 +2,13 @@
 
 class Solution:
     def minSwaps(self, s: str) -> int:
-        s = [i for i in s]
-        swp = 0
-        i = 0
-        j = len(s) - 1
+        swap = 0
+        mx = 0
+        for i in range(len(s)):
+            if s[i] == '[':
+                swap -= 1
+            else:
+                swap += 1
+            mx = max(mx, swap)
 
-        while i < j:
-            if not(s[i] == '[' and s[i+1] == ']') or not(s[j-1] == '[' and s[j] == ']'):
-                swp += 1
-                s[i], s[j] = s[j], s[i]
-            i += 1
-            j -= 1
-
-        return swp
+        return (mx+1)//2 # every operation will remove a pair of balanced brackets
