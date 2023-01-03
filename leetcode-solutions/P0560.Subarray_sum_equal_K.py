@@ -21,3 +21,24 @@ class Solution(object):
             map[num] += 1
 
         return cnt
+
+# Method 2 - similar to above (wrong submission)
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        mp = {}
+        mp[0] = 1
+        cnt = 0
+        prefix = [0] * len(nums)
+
+        for i in range(1,len(nums)):
+            prefix[i] = nums[i] + prefix[i-1]
+
+        for i in range(len(nums)):
+            diff = abs(nums[i] - k)
+
+            if diff in mp:
+                cnt += mp[diff] 
+                mp[diff] += 1
+            mp[diff] = 1
+
+        return cnt
