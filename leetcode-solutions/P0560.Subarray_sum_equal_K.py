@@ -22,23 +22,23 @@ class Solution(object):
 
         return cnt
 
-# Method 2 - similar to above (wrong submission)
+# Method 2 - similar to above
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        mp = {}
+        mp = defaultdict(int)
         mp[0] = 1
         cnt = 0
-        prefix = [0] * len(nums)
+        prefix = [0] * (len(nums))
 
-        for i in range(1,len(nums)):
-            prefix[i] = nums[i] + prefix[i-1]
+        for i in range(1, len(nums)):
+            prefix[i] = nums[i-1] + prefix[i-1]
 
-        for i in range(len(nums)):
-            diff = abs(nums[i] - k)
+        for i in range(len(prefix)):
+            diff = nums[i] + prefix[i] - k
 
             if diff in mp:
                 cnt += mp[diff] 
-                mp[diff] += 1
-            mp[diff] = 1
+
+            mp[nums[i] + prefix[i]] += 1
 
         return cnt
