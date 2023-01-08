@@ -45,7 +45,7 @@ class Solution:
 
         return pt
 
-# Method 2 - wrong submission
+# Method 2
 
 class Solution:
     def gridGame(self, grid: List[List[int]]) -> int:
@@ -53,7 +53,7 @@ class Solution:
         ans = float('inf')
         lrow = 0
 
-        for i in range(len(grid)):
+        for i in range(len(grid[0])):
             frow -= grid[0][i]
             ans = min(ans, max(frow, lrow))
             lrow += grid[1][i]
