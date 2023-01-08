@@ -44,3 +44,18 @@ class Solution:
                     pt += grid[i][j]
 
         return pt
+
+# Method 2 - wrong submission
+
+class Solution:
+    def gridGame(self, grid: List[List[int]]) -> int:
+        frow = sum(grid[0])
+        ans = float('inf')
+        lrow = 0
+
+        for i in range(len(grid)):
+            frow -= grid[0][i]
+            ans = min(ans, max(frow, lrow))
+            lrow += grid[1][i]
+
+        return ans
