@@ -56,3 +56,31 @@ class Solution(object):
                     ans[i] = 'L'
 
         return ''.join(ans)
+
+# Method 2
+
+class Solution:
+    def pushDominoes(self, dominoes: str) -> str:
+        lst = list(dominoes)
+        d = deque()
+
+        for i in range(len(lst)):
+            if lst[i] != '.':
+                d.append((i, lst[i]))
+
+        while d:
+            idx, dom = d.popleft()
+
+            if dom == 'L':
+                if idx > 0 and lst[idx-1] == '.':
+                    lst[idx-1] = 'L'
+                    d.append((idx-1, 'L'))
+            else:
+                if idx + 1 < len(lst) and lst[idx + 1] == '.':
+                    if idx + 2 < len(lst) and lst[idx+2] == 'L':
+                        d.popleft()
+                    else:
+                        lst[idx+1] = 'R'
+                        d.append((idx+1, 'R'))
+
+        return ''.join(lst)
