@@ -2,22 +2,15 @@
 
 class Solution:
     def leastBricks(self, wall: List[List[int]]) -> int:
-        gap = {}
+        gap = defaultdict(int)
 
+        width = sum(wall[0])
         for i in range(len(wall)):
-            l = 0
-            for j in range(len(wall[i])-1):
+            l = wall[i][0]
+            for j in range(1, len(wall[i])):
+                gap[l] += 1
                 l += wall[i][j]
-                if l not in gap:
-                    gap[l] = 1
-                else:
-                    gap[l] += 1
 
-        mx = 0
-        max_gap = 0
-        for k, v in gap.items():
-            if v > mx:
-                mx = v
-                max_gap = k
+        max_gap = max(gap.values() or [0])
 
         return len(wall) - max_gap
