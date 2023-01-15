@@ -27,13 +27,13 @@ class Solution:
 
         for i in range(len(asteroids)):
             stck.append(asteroids[i])
-            while len(stck) > 1 and ((stck[-2] > 0 and stck[-1] < 0) \
-                    or (stck[-1] > 0 and stck[-2] < 0)):
+            # check if there is asteriod < 0 (moving left) and one > 0 (moving right)
+            while len(stck) > 1 and stck[-1] < 0 and stck[-2] > 0:
                 el = stck.pop()
-                if abs(stck[-1]) > abs(el):
+                if stck[-1] > abs(el):
                     continue
                 else:
-                    if abs(el) == abs(stck[-1]): 
+                    if abs(el) == stck[-1]: 
                         stck.pop()
                     else:
                         stck.pop()
