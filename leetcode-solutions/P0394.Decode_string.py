@@ -1,5 +1,3 @@
-# wrong submission
-
 class Solution:
     def decodeString(self, s: str) -> str:
         stck = []
@@ -11,10 +9,11 @@ class Solution:
             elif c == ']':
                 el = ''
                 while stck[-1] != '[':
-                    el += stck.pop()
+                    # replace el += stck.pop() to below, to avoid reversal of a string after pop
+                    el = stck.pop() + el
                 stck.pop()
                 n = stck.pop()
-                stck.append(int(n) * el[::-1])
+                stck.append(int(n) * el)
             else:
                 if c.isdigit():
                     if idx >= 1 and s[idx - 1].isdigit():
