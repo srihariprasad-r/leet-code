@@ -45,3 +45,24 @@ class Solution(object):
                 right = mid - 1
                 
         return res
+
+# Method 3 - wrong submission RTE
+
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        l = 0
+        r = len(nums)
+
+        while l <= r:
+            mid = (l + (r-l+1)//2) % len(nums)
+
+            if (nums[mid] < nums[mid+1]
+                    and nums[mid] < nums[mid-1]):
+                return nums[mid]
+
+            if nums[mid] < nums[l]:
+                l = mid
+            else:
+                r = mid - 1
+
+        return -1
