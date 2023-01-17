@@ -48,24 +48,26 @@ class Solution(object):
 
 # Method 3 - wrong submission
 
+
 class Solution:
     def findMin(self, nums: List[int]) -> int:
         l = 0
         r = len(nums)
 
+        if len(nums) == 1:
+            return nums[0]
         if nums[l] < nums[r-1]:
             return nums[l]
 
         while l < r:
             mid = (l + (r-l+1)//2) % len(nums)
 
-            if (nums[mid] <= nums[r % len(nums)]
-                and nums[mid] <= nums[l % len(nums)]):
+            if mid > 0 and nums[mid-1] > nums[mid]:
                 return nums[mid]
 
-            if nums[mid] <= nums[l % len(nums)]:
-                r = mid
-            else:
+            if nums[mid] > nums[r % len(nums)]:
                 l = mid + 1
+            else:
+                r = mid
 
         return -1
