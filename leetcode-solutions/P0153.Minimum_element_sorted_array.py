@@ -53,6 +53,9 @@ class Solution:
         l = 0
         r = len(nums)
 
+        if nums[l] < nums[r-1]:
+            return nums[l]
+
         while l < r:
             mid = (l + (r-l+1)//2) % len(nums)
 
