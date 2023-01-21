@@ -13,8 +13,8 @@ class Solution:
                 # if products[m][:len(target)] == target:
                 #     return m
 
-                if products[m] > target:
-                    r = m - 1
+                if products[m] >= target:
+                    r = m
                 else:
                     l = m + 1
 
