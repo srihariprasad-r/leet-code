@@ -17,4 +17,4 @@ class Solution:
         while stck and idx < len(stck) and stck[idx] == '0':
             idx += 1
 
-        return ''.join(stck[idx:]) if stck else '0'
+        return ''.join(stck[idx:]) if len(stck[idx:]) > 0 else '0'
