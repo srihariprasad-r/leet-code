@@ -18,8 +18,35 @@ class Solution:
             if not removed:
                 break
         return s
+
+# Method 2 - wrong submission
+
+class Solution:
+    def removeDuplicates(self, s: str, k: int) -> str:
+        mp = set()
+        stck = []
+        i = 0
+        while i < len(s):
+            if s[i] not in mp:
+                mp.add(s[i])
+                stck.append((s[i], 1))
+            else:
+                el , cnt = stck.pop()
+                if el == s[i]:
+                    if cnt + 1 == k:
+                        while stck and stck[-1][0] == el:
+                            stck.pop()
+                        s = s[:i-k+1] + s[i+1:]
+                        i = i - k
+                    else:
+                        stck.append((el, cnt + 1))
+                else:
+                    stck.append((el, cnt))
+            i += 1
+
+        return s
                 
-# Method - 2
+# Method - 3
 
 class Solution:
     def removeDuplicates(self, s: str, k: int) -> str:
