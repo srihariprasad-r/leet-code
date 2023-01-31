@@ -18,3 +18,23 @@ class Solution(object):
                 st += 1
 
         return 0 if mlen == float('inf') else mlen
+
+# Method 2 - almost similar to above
+
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        st = 0
+        end = 0
+        s = 0
+        res = float('inf')
+
+        while end < len(nums):
+            s += nums[end]
+            while s >= target:
+                s -= nums[st]
+                res = min(res, end - st + 1)
+                st += 1
+            end += 1
+
+    
+        return res if res != float('inf') else 0
