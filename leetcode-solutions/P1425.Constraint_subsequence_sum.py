@@ -21,3 +21,22 @@ class Solution(object):
             dec.append(maxel)
             
         return max(arr)
+
+# Method 2
+class Solution:
+    def constrainedSubsetSum(self, nums: List[int], k: int) -> int:
+        deq = deque()
+        dp = [0] * len(nums)
+
+        for idx, num in enumerate(nums):
+            if idx > k and deq and deq[0] == dp[idx-k-1]:
+                deq.popleft()
+
+            dp[idx] = max(deq[0] if deq else 0,0) + num
+
+            while deq and deq[-1] < dp[idx]:
+                deq.pop()
+
+            deq.append(dp[idx])
+
+        return max(dp)
