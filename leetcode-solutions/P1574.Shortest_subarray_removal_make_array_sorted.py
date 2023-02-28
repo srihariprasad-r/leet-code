@@ -29,3 +29,33 @@ class Solution(object):
                 j += 1
             
         return ans
+
+# same as above
+
+class Solution:
+    def findLengthOfShortestSubarray(self, arr: List[int]) -> int:
+        i = 0
+        j = len(arr) - 1
+        ans = 0
+
+        while i < len(arr)-1 and arr[i] <= arr[i+1]:
+            i += 1
+
+        # need this condition
+        if i == len(arr) - 1: return 0
+
+        while j > i and arr[j-1] <= arr[j]:
+            j -= 1
+
+        ans = min(len(arr)- i-1, j)
+
+        m = 0
+        n = j
+        while m <= i and n < len(arr):
+            if arr[n] >= arr[m]:
+                ans = min(ans, n - m -1)
+                m += 1
+            else:
+                n += 1
+
+        return ans
