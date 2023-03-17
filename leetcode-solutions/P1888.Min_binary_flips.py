@@ -13,7 +13,7 @@ class Solution:
             s2 += '1' if i % 2 else '0'
 
         l = 0
-        for r in range(n):
+        for r in range(len(s)):
             if s[r] != s1[r]:
                 d1 += 1
             if s[r] != s2[r]:
