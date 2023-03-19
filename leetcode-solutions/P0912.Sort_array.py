@@ -4,7 +4,8 @@ class Solution:
     def sortArray(self, nums: List[int]) -> List[int]:
         if len(nums) <= 1: return nums
         def merge(arr, l, mid, r):
-            tmp = [0] *  len(arr)
+            # changed from len(arr) -> r - l + 1 to fix TLE
+            tmp = [0] * (r - l + 1)
 
             k = 0
             low = l
