@@ -18,16 +18,16 @@ class Solution(object):
             
         return cnt
 
-# merge sort - TLE
+# merge sort
 class Solution:
     def reversePairs(self, nums: List[int]) -> int:
         def merge(arr, l, mid, r):
             cnt = 0
             low = l
             high = mid + 1
-
+            # moved here to fix TLE
+            j = high
             for i in range(low, mid+1):
-                j = high
                 while j <= r and arr[i] > 2 * nums[j]:
                     j += 1
 
