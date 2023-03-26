@@ -101,6 +101,8 @@ class Solution(object):
         return mergesort(0, len(nums)-1, nums, [-1]*len(nums), [0]*len(nums))
 
 # wrong submission
+
+
 class Solution:
     def countSmaller(self, nums: List[int]) -> List[int]:
         def merge(left, mid, right, arr, res):
@@ -110,26 +112,22 @@ class Solution:
             cnt = 0
             tmp = [0] * (right-left+1)
             high = j
-            for i in range(left, mid+1):
-                while high <= right and arr[i] >= arr[high]:
-                    high += 1
-
-                res[i] = high - (mid+1)
 
             while i <= mid and j <= right:
                 if arr[i] <= arr[j]:
                     tmp[k] = arr[i]
+                    res[i] += cnt
                     i += 1
                     k += 1
                 else:
                     tmp[k] = arr[j]
                     cnt += 1
-                    # res[k]= j - mid
                     j += 1
                     k += 1
 
             while i <= mid:
                 tmp[k] = arr[i]
+                res[i] += cnt
                 i += 1
                 k += 1
 
@@ -149,8 +147,8 @@ class Solution:
             mid = (right + left) // 2
             mergesort(left, mid, arr, res)
             mergesort(mid+1, right, arr, res)
-            merge(left, mid+1, right, arr, res)
+            merge(left, mid, right, arr, res)
 
             return res
 
-        return mergesort(0, len(nums)-1, nums, [-1]*len(nums))
+        return mergesort(0, len(nums)-1, nums, [0]*len(nums))
