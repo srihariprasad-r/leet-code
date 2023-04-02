@@ -38,3 +38,27 @@ class Solution(object):
         dp = [-1 for _ in range(n)]
 
         return dfs(0, 0, n, float('inf'), dp)
+
+
+# Method 2
+
+class Solution:
+    def numSquares(self, n: int) -> int:
+        squares = [i*i for i in range(1,int((n)**0.5)+1)]
+
+        q = []
+        visited = set()
+        q.append((n, 0, 0))
+        visited.add(0)
+
+
+        while q:
+            el, s, d = q.pop(0)
+            if s == el: return d
+            for i in range(len(squares)):
+                if s + squares[i] <= el:
+                    if s + squares[i] not in visited:
+                        q.append((el, s + squares[i], d + 1))
+                        visited.add(s+squares[i])
+
+        return d 
