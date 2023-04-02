@@ -1,0 +1,29 @@
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        if endWord not in wordList:
+            return 0
+
+        q = []
+        visited = set()
+        steps = 0
+        q.append(beginWord)
+        visited.add(beginWord)
+
+        while len(q) > 0:
+            el = q.pop(0)
+            if el == endWord:
+                return steps
+            for i in range(len(el)):
+                for c in range(26):
+                    newstr = ''
+                    temp = chr(ord('a') + c)
+                    if temp != el[i]:
+                        newstr += el[:i]
+                        newstr += temp
+                        newstr += el[i+1:]
+                        if newstr in wordList and newstr not in visited:
+                            visited.add(newstr)
+                            q.append(newstr)
+            steps += 1
+
+        return steps
