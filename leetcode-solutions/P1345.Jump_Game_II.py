@@ -1,27 +1,28 @@
-# wrong submission
+# TLE
 
 class Solution:
     def minJumps(self, arr: List[int]) -> int:
-        q = [(arr[0], 0)]
-        visited = [(arr[0], 0)]
-        steps = 0
+        q = [(arr[0], 0, 0)]
+        visited = [0]
+        # steps = 0
+        res = float('inf')
 
         while q:
-            el, pos = q.pop()
-            if pos == len(arr) - 1:
-                return steps
-            for i in range(pos+1, len(arr)):
-                if (arr[i], pos+i) not in visited and arr[pos] == arr[i]:
-                    q.append((arr[i], pos+i))
-                    visited.append((arr[i], pos+1))
-            if pos > 0 and pos < len(arr):
-                if (arr[pos], pos-1) not in visited:
-                    q.append((arr[pos], pos-1))
-                    visited.append((arr[pos], pos-1))
-            if pos < len(arr):
-                if (arr[pos], pos+1) not in visited:
-                    q.append((arr[pos], pos+1))
-                    visited.append((arr[pos], pos+1))
-            steps += 1
-
-        return -1
+            for _ in range(len(q)):
+                el, pos, s = q.pop(0)
+                if pos == len(arr) - 1:
+                    res = min(res, s)
+                for i in range(pos+1, len(arr)):
+                    if i not in visited and el == arr[i]:
+                        q.append((arr[i], i, s + 1))
+                        visited.append(i)
+                    if pos > 0 and pos < len(arr):
+                        if (pos-1) not in visited:
+                            q.append((arr[pos-1], pos-1, s + 1))
+                            visited.append(pos-1)
+                    if pos < len(arr):
+                        if (pos+1) not in visited:
+                            q.append((arr[pos+1], pos+1, s + 1))
+                            visited.append(pos+1)
+            
+        return -1 if res == float('inf') else res
