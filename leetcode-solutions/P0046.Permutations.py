@@ -67,3 +67,28 @@ class Solution:
 
         fq = dict.fromkeys(nums, 0)
         return dfs(fq, [], [])
+    
+# Method 3 - backtracking
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        used = [False] * len(nums)
+        ans = []
+
+        def recursion(arr):
+            if len(res) == len(arr):
+                ans.append(copy.deepcopy(res))
+                return
+
+            for i in range(len(arr)):
+                if used[i]:
+                    continue
+                res.append(arr[i])
+                used[i] = True
+                recursion(arr)
+                res.pop()
+                used[i] = False
+
+            return ans
+
+        return recursion(nums)
