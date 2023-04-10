@@ -24,3 +24,23 @@ class Solution(object):
                 continue
 
             return dfs(nums[i:], i, [])
+        
+# Method 2
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        ans = []
+        nums.sort()
+
+        def recursion(idx, arr):
+            if not(res in ans):
+                ans.append(copy.deepcopy(res))
+
+            for i in range(idx, len(arr)):
+                res.append(arr[i])
+                recursion(i+1, arr)
+                res.pop()
+
+            return ans
+
+        return recursion(0, nums)
