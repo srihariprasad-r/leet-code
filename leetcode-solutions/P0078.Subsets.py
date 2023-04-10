@@ -42,3 +42,21 @@ class Solution(object):
         
         return dfs([], 0)
 
+# Method 3
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        ans = []
+
+        def recursion(idx, arr):
+            ans.append(copy.deepcopy(res))
+
+            for i in range(idx, len(arr)):
+                res.append(arr[i])
+                recursion(i+1, arr)
+                res.pop()
+
+            return ans
+
+        return recursion(0, nums)
