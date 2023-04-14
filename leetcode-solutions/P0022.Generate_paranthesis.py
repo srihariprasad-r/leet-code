@@ -21,3 +21,28 @@ class Solution:
             return res
 
         return dfs(0, 0)
+
+# Method 2
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+
+        def recursion(l, r, arr):
+            if l < 0 or r < 0 or l > r:
+                return
+
+            if l == 0 and r == 0:
+                res.append(copy.deepcopy(''.join(arr)))
+                return
+
+            arr.append('(')
+            recursion(l - 1, r, arr)
+            arr.pop()
+
+            arr.append(')')
+            recursion(l, r - 1, arr)
+            arr.pop()
+
+            return res
+
+        return recursion(n, n, [])
