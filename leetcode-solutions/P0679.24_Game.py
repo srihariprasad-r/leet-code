@@ -42,3 +42,39 @@ class Solution:
                             seen.add(tuple(nxt + [o]))
 
         return False
+
+
+# error
+
+class Solution:
+    def judgePoint24(self, cards: List[int]) -> bool:
+
+        lst = ['+', '-', '*', '/']
+
+        def dfs(arr):
+            if len(arr) == 1:
+                return True if 23.99 < arr[0] <= 24 else False
+
+            for i in range(len(arr)):
+                for j in range(i):
+                    x = arr[i]
+                    y = arr[j]
+                    val = [x + y, y - x, x - y, x * y]
+                    if x > 0:
+                        val.append(y/x)
+                    if y > 0:
+                        val.append(x/y)
+                    arr.remove(x)
+                    arr.remove(y)
+                    for v in val:
+                        arr.append(v)
+                        dfs(arr)
+                        arr.pop()
+                    arr.append(j)
+                    arr.append(y)
+                    arr.append(i)
+                    arr.append(x)
+
+            return False
+
+        return dfs(cards)
