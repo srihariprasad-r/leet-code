@@ -44,14 +44,14 @@ class Solution:
         return False
 
 
-# error
+# Methdod 2
 
 class Solution:
     def judgePoint24(self, cards: List[int]) -> bool:
-
+    
         lst = ['+', '-', '*', '/']
 
-        def dfs(arr):
+        def dfs(arr): 
             if len(arr) == 1:
                 return True if 23.99 < arr[0] <= 24 else False
 
@@ -59,22 +59,18 @@ class Solution:
                 for j in range(i):
                     x = arr[i]
                     y = arr[j]
-                    val = [x + y, y - x, x - y, x * y]
-                    if x > 0:
-                        val.append(y/x)
-                    if y > 0:
-                        val.append(x/y)
+                    val = [x + y, y - x , x - y, x * y]
+                    if x > 0: val.append(y/x)
+                    if y > 0: val.append(x/y)
                     arr.remove(x)
                     arr.remove(y)
                     for v in val:
                         arr.append(v)
-                        dfs(arr)
-                        arr.pop()
-                    arr.append(j)
-                    arr.append(y)
-                    arr.append(i)
-                    arr.append(x)
+                        if dfs(arr): return True
+                        arr.remove(v)
+                    arr.insert(j, y)
+                    arr.insert(i, x)
 
             return False
-
+        
         return dfs(cards)
