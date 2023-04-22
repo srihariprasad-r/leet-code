@@ -4,7 +4,7 @@ class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
         q = deque([(beginWord, beginWord)])
         seen = set()
-        res = defaultdict(list)
+        res = []
         ans = defaultdict(set)
 
         while q:
@@ -14,7 +14,6 @@ class Solution:
                 seen.add((parent, cur))
                 if cur == endWord:
                     ans[parent].add(cur)
-                    # ans = defaultdict(set)
                     break
 
                 for i in range(len(cur)):
@@ -23,21 +22,20 @@ class Solution:
                     t = ''
                     for x in 'abcdefghijklmnopqrstuvwxyz':
                         t = first + x + last
-                        if (cur, t) not in seen and t in wordList:
+                        if (cur,t) not in seen and t in wordList:
                             q.append((cur, t))
                             seen.add((cur, t))
-                            if cur != parent and cur not in ans.keys():
-                                ans[parent].add(cur)
+                            if cur != parent and cur not in ans.keys(): ans[parent].add(cur)
+   
+        def recurse(ans, key, arr=[]):
+            if key not in ans.keys() and key == endWord:
+                res.append(arr)
+            for k, v in ans.items():
+                if k == key:
+                    val = list(ans[k])
+                    for i in range(len(val)):
+                        recurse(ans, val[i], arr + [val[i]])
 
-        print(ans)
+            return res
 
-        for k, v in ans.items():
-            st = list(v)
-            for i in range(len(st)):
-                res[k].append(st[i])
-                if st[i] in ans.keys():
-                    val = list(ans[st[i]])
-                    for j in range(len(val)):
-                        res[k].append(val[j])
-
-        print(res)
+        return recurse(ans, beginWord, [beginWord])
