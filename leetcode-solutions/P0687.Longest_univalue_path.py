@@ -15,9 +15,9 @@ class Solution:
             if node is None:
                 return ln
 
-            val = node.val if node.val != val else val
+            newval = node.val if node.val != val else val
             ln = ln + 1 if node.val == val else ln
-            return max(dfs(node.left, val, ln),
-                       dfs(node.right, val, ln))
 
-        return max(dfs(root.left, root.val, 0), dfs(root.right, root.val, 0))
+            return max(dfs(node.left, newval, ln), dfs(node.right, newval, ln))
+
+        return dfs(root.left, root.val, 0) + dfs(root.right, root.val, 0)
