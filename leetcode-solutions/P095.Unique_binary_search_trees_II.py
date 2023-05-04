@@ -71,3 +71,31 @@ class Solution(object):
         nums = [i for i in range(1, n+1)]
 
         return dfs(nums)
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def generateTrees(self, n: int) -> List[Optional[TreeNode]]:
+
+        @lru_cache(None)
+        def dfs(left, right):
+            if left > right:
+                return [None]
+            if left == right:
+                return [TreeNode(left)]
+            ans = []
+            for root in range(left, right+1):
+                left_nodes = dfs(left, root-1)
+                right_nodes = dfs(root+1, right)
+                for l in left_nodes:
+                    for r in right_nodes:
+                        ans.append(TreeNode(root, l, r))
+
+            return ans
+
+        return dfs(1, n)
