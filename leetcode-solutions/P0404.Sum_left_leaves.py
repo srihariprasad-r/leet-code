@@ -24,7 +24,7 @@ class Solution(object):
 
         return helper(root, 0)
 
-# wrong submission
+# Method 2
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -32,12 +32,14 @@ class Solution(object):
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+
 class Solution:
     def sumOfLeftLeaves(self, root: Optional[TreeNode]) -> int:
         self.ans = 0
 
-        def dfs(node,fl='root'):
-            if not node: 
+        def dfs(node, fl='root'):
+            if not node:
                 return 0
 
             if node.left:
@@ -46,7 +48,8 @@ class Solution:
             if node.right:
                 dfs(node.right, 'r')
 
-            if not node.left and fl == 'l': self.ans += node.val
+            if not node.left and not node.right and fl == 'l':
+                self.ans += node.val
 
             return self.ans
 
