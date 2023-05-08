@@ -1,3 +1,5 @@
+# wrong submission
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -18,8 +20,15 @@ class Solution:
             if s > targetSum:
                 return
 
-            dfs(node.left, s + node.val, tmp + [node.val])
-            dfs(node.right, s + node.val, tmp + [node.val])
+            s += node.val
+            if s == targetSum:
+                if not node.left and not node.right:
+                    if tmp not in res:
+                        res.append(copy.deepcopy(tmp + [node.val]))
+                return res
+            else:
+                dfs(node.left, s, tmp + [node.val])
+                dfs(node.right, s, tmp + [node.val])
 
             return res
 
