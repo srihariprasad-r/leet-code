@@ -17,7 +17,8 @@ class Solution:
                         res.append(copy.deepcopy(tmp))
                 return
 
-            if s > targetSum:
+            # abs() to handle < 0 targets
+            if abs(s) > abs(targetSum):
                 return
 
             s += node.val
