@@ -1,5 +1,3 @@
-# wrong submission
-
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -10,27 +8,33 @@ class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
         res = []
 
-        def dfs(node, s, tmp=[]):
+        if not root:
+            return []
+
+        def dfs(node, s, ans):
             if not node:
-                if s == targetSum:
-                    if tmp not in res:
-                        res.append(copy.deepcopy(tmp))
-                return
+                return 0
 
-            # abs() to handle < 0 targets
-            if abs(s) > abs(targetSum):
-                return
+            if not node.left and not node.right:
+                s -= node.val
+                if s == 0:
+                    res.append(copy.deepcopy(ans + [node.val]))
+                    return
+            # commented due to -ve values passed as input
+            #     elif s < 0:
+            #         return
 
-            s += node.val
-            if s == targetSum:
-                if not node.left and not node.right:
-                    if tmp not in res:
-                        res.append(copy.deepcopy(tmp + [node.val]))
-                return res
-            else:
-                dfs(node.left, s, tmp + [node.val])
-                dfs(node.right, s, tmp + [node.val])
+            # if s < 0:
+            #     return
 
-            return res
+            ans.append(node.val)
+            s -= node.val
+            dfs(node.left, s, ans)
+            dfs(node.right, s, ans)
+            ans.pop()
 
-        return dfs(root, 0, [])
+            return
+
+        dfs(root, targetSum, [])
+
+        return res
