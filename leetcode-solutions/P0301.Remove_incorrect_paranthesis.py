@@ -1,43 +1,44 @@
-# TLE
-
 class Solution:
     def removeInvalidParentheses(self, s: str) -> List[str]:
+        def valid(st):
+            o = 0
+
+            for i in range(len(st)):
+                if o < 0:
+                    return False
+
+                if st[i] == '(':
+                    o += 1
+                elif st[i] == ')':
+                    o -= 1
+                else:
+                    continue
+
+            return o == 0
+
+        q = list()
         res = []
-        mx = float('-inf')
-        ans = set()
+        q.append((0, s))
+        visited = set()
 
-        def valid(p):
-            cnt = 0
+        while q:
+            for _ in range(len(q)):
+                x, cur = q.pop()
 
-            if p.count('(') != p.count(')'): return False
+                if valid(cur):
+                    res.append(cur)
 
-            for i in range(len(p)):
-                if p[i].isalpha(): continue
-                
-                if p[i] == '(': 
-                    cnt += 1
-                else: 
-                    cnt -= 1
-                    if cnt < 0: return False
+                for i in range(len(cur)):
+                    new_str = cur[:i] + cur[i+1:]
+                    if len(new_str) > 0:
+                        if new_str not in visited:
+                            q.append((i, new_str))
+                            visited.add(new_str)
 
-            return True
+        mx = 0
+        for i in range(len(res)):
+            mx = max(mx, len(res[i]))
 
-        def dfs(idx, arr):
-            if idx == len(s):
-                res.append(copy.deepcopy(''.join(arr)))
-                return
+        res = list(filter(lambda x: len(x) == mx, res))
 
-            arr.append(s[idx])
-            dfs(idx+1, arr)
-            arr.pop()
-            if s[idx] != '(' or s[idx] != ')': dfs(idx+1, arr)
-
-            return res
-
-        result = dfs(0, [])
-        for r in result:
-            if valid(r):
-                ans.add(r)
-                mx = max(mx, len(r))
-
-        return filter(lambda x: len(x) == mx, list(ans))
+        return res if res else [""]
