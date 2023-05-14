@@ -56,4 +56,29 @@ class Solution(object):
             
         return ans.right
             
-            
+# Method 3
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def increasingBST(self, root: TreeNode) -> TreeNode:
+        n = self.node = TreeNode()
+
+        def dfs(node1):
+            if not node1:
+                return None
+
+            dfs(node1.left)
+            self.node.right = TreeNode(node1.val)
+            self.node = self.node.right
+            dfs(node1.right)
+
+            # return self.node
+
+        dfs(root)
+
+        return n.right
