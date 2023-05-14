@@ -37,3 +37,35 @@ class Solution(object):
                 result.append(curList)
         
         return result[0][0]
+
+# wrong submission
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
+        res = []
+
+        def dfs(node, st, lvl):
+            if not node:
+                return None
+
+            if not node.right and not node.left:
+                if st == 'l':
+                    heapq.heappush(res, (-lvl, node.val))
+                elif st == 'root':
+                    heapq.heappush(res, (0, node.val))
+                return
+
+            dfs(node.left, 'l', lvl+1)
+            dfs(node.right, 'r', lvl+1)
+
+        dfs(root, 'root', 0)
+
+        if res:
+            o = heapq.heappop(res)
+            return o[1]
