@@ -12,10 +12,13 @@ class Solution:
             if not arr:
                 return False
 
-            if arr[0] < arr[-1]:
-                return False
+            if len(arr) == 1:
+                return True
 
-            return True
+            if arr[0] < arr[-1]:
+                return True
+
+            return False
 
         stck = []
         lvl_all = collections.defaultdict(list)
@@ -25,19 +28,32 @@ class Solution:
             for _ in range(len(stck)):
                 node, lvl = stck.pop()
 
+                if lvl % 2:
+                    if node.val % 2:
+                        return False
+                else:
+                    if not node.val % 2:
+                        return False
+
                 if node.left:
                     stck.append((node.left, lvl+1))
 
                 if node.right:
                     stck.append((node.right, lvl+1))
 
-                lvl_all[lvl].append(node.val)
+                if lvl > 0:
+                    lvl_all[lvl].append(node.val)
 
         fl = True
+
         for k, v in lvl_all.items():
-            if not(k % 2 == 0 and increasing(v)):
-                fl = False
-            elif not(k % 2 and not increasing(v)):
-                fl = False
+            if len(set(v)) != len(v):
+                return False
+            if k % 2 == 0:
+                if not increasing(v[::-1]):
+                    fl = False
+            else:
+                if increasing(v[::-1]):
+                    fl = False
 
         return fl
