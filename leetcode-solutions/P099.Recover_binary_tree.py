@@ -73,3 +73,32 @@ class Solution(object):
         inorder(root)
 
         self.first.val, self.second.val = self.second.val, self.first.val
+
+# wrong submission
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+
+class Solution:
+    def recoverTree(self, root: Optional[TreeNode]) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        def dfs(node, fl='', parent=None):
+            if not node:
+                return
+
+            dfs(node.left, 'l', node)
+            pval = parent.val if parent else 0
+            if ((fl == 'l' and node.val > pval) or (fl == 'r' and node.val < pval)):
+                tmp = node.val
+                node.val = pval
+                parent.val = tmp
+            dfs(node.right, 'r', node)
+
+        dfs(root)
