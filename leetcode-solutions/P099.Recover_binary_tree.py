@@ -74,8 +74,14 @@ class Solution(object):
 
         self.first.val, self.second.val = self.second.val, self.first.val
 
-# wrong submission
+# almost same as above
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -89,16 +95,22 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        def dfs(node, fl='', parent=None):
+        self.frst = None
+        self.scnd = None
+        self.prv = None
+
+        def dfs(node):
             if not node:
                 return
 
-            dfs(node.left, 'l', node)
-            pval = parent.val if parent else 0
-            if ((fl == 'l' and node.val > pval) or (fl == 'r' and node.val < pval)):
-                tmp = node.val
-                node.val = pval
-                parent.val = tmp
-            dfs(node.right, 'r', node)
+            dfs(node.left)
+            if self.prv and not self.frst and node.val <= self.prv.val:
+                self.frst = self.prv
+
+            if self.frst and node.val <= self.prv.val:
+                self.scnd = node
+            self.prv = node
+            dfs(node.right)
 
         dfs(root)
+        self.frst.val, self.scnd.val = self.scnd.val, self.frst.val
