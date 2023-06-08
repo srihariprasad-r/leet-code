@@ -35,3 +35,36 @@ class Solution(object):
                 dict[j] -= 1
 
         return ''.join(res) if len(res) > 0 else ''
+
+# Method2
+
+class Solution:
+    def reorganizeString(self, s: str) -> str:
+        c = defaultdict(int)
+        hp = []
+        res = ''
+        prev = []
+
+        for el in s:
+            c[el] += 1
+
+        for el, o in c.items():
+            hp.append((-o, el))
+
+        heapq.heapify(hp)
+
+        while hp:
+            cnt, el = heapq.heappop(hp)
+
+            res += el
+            cnt += 1
+
+            if prev: 
+                heapq.heappush(hp, prev)
+                prev = None
+
+            if cnt != 0:
+                prev = (cnt, el)
+
+        
+        return res if len(res) == len(s) else ''
