@@ -1,18 +1,13 @@
-# wrong submission
-
 class Solution:
     def sumOddLengthSubarrays(self, arr: List[int]) -> int:
-        self.ans = 0
-        def recursion(idx, s, res):
-            if idx == len(arr):
-                if len(res) % 2 == 1:
-                    self.ans += s
-                return
-            
-            res.append(arr[idx])
-            recursion(idx+1, s + arr[idx], res)
-            res.pop()
-            
-            return self.ans
+        p = [0]
+        ans = 0
         
-        return recursion(0, 0, [])
+        for i in range(len(arr)):
+            p.append(p[-1] + arr[i])
+        
+        for i in range(len(p)):
+            for j in range(i+1, len(p), 2):
+                ans += p[j] - p[i]
+
+        return ans
