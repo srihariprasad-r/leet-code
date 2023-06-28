@@ -29,3 +29,25 @@ class Solution:
                 l = mid + 1
 
         return l
+
+# wrong submission
+
+class Solution:
+    def swimInWater(self, grid: List[List[int]]) -> int:
+        visited = set()
+        q = [(grid[0][0], 0, 0)]
+        visited.add((0,0))
+        heapq.heapify(q)
+
+        d = [(0, -1), (0,1), (1,0),(1,-1)]
+
+        while q:
+            for _ in range(len(q)):
+                val, r, c = heapq.heappop(q)
+                if r == len(grid) - 1 and c == len(grid[0]) - 1: return val
+                for dx, dy in d:
+                    x = r + dx
+                    y = c + dy
+                    if 0 <= x < len(grid) and 0 <= y < len(grid[0]) and (x,y) not in visited:
+                        heapq.heappush(q, (max(val, grid[x][y]), x, y))
+                        visited.add((x,y))
