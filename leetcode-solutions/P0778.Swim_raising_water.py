@@ -30,7 +30,7 @@ class Solution:
 
         return l
 
-# wrong submission
+# Method 2
 
 class Solution:
     def swimInWater(self, grid: List[List[int]]) -> int:
@@ -39,7 +39,7 @@ class Solution:
         visited.add((0,0))
         heapq.heapify(q)
 
-        d = [(0, -1), (0,1), (1,0),(1,-1)]
+        d = [(0, -1), (0, 1), (1, 0), (-1, 0)]
 
         while q:
             for _ in range(len(q)):
