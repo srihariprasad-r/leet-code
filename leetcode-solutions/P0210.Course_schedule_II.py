@@ -24,7 +24,7 @@ class Solution:
 
         return ans if len(ans) == numCourses else []
     
-# wrong submission
+# Method 2 - Topological sort
 
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
@@ -33,7 +33,7 @@ class Solution:
         for x in prerequisites:
             adj[x[0]].append(x[1])
 
-        visited = [0] * numCourses 
+        visited = [0] * numCourses
 
         def recursion(n):
             if visited[n] == 2:
@@ -42,31 +42,31 @@ class Solution:
             visited[n] = 2
             for i in range(len(adj[n])):
                 if visited[adj[n][i]] != 1:
-                    if recursion(adj[n][i]): return True
+                    if recursion(adj[n][i]):
+                        return True
 
             visited[n] = 1
-
             return False
 
         for i in range(numCourses):
             if recursion(i):
                 return []
 
-        visited = [False] * numCourses 
+        visited = [False] * numCourses
         stck = []
 
-        def tpsort(n):
+        def tpsort(n, stck):
             visited[n] = True
 
             for x in adj[n]:
-                if not visited[n]: tpsort(x)
-            
-            stck.append(n)
+                if not visited[x]:
+                    tpsort(x, stck)
 
-            return 
+            stck.append(n)
+            return stck
 
         for i in range(numCourses):
             if not visited[i]:
-                tpsort(i)
+                tpsort(i, stck)
 
         return stck
