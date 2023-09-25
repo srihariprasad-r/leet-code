@@ -19,3 +19,21 @@ class Solution(object):
                 dp_arr[i][j] = dp_arr[i-1][j] + dp_arr[i][j+1]
             
         return sum(dp_arr[n])
+
+# Method 2
+class Solution:
+    def countVowelStrings(self, n: int) -> int:
+        vowels = ['a', 'e', 'i', 'o', 'u']
+        res = 0
+
+        def recurse(n, r):
+            if n == 0: return 1
+
+            res = 0
+            for v in vowels:
+                if r <= v:
+                    res += recurse(n-1, v)
+
+            return res
+
+        return recurse(n, '') 
