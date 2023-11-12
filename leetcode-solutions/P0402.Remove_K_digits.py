@@ -1,20 +1,18 @@
-# wrong submission
-
 class Solution:
-    def removeKdigits(self, num: str, k: int) -> str:
-        stck = []
-        for n in num:
-            while stck and int(stck[-1]) > int(n) and k > 0:
+    def removeKdigits(self, nums: str, k: int) -> str:
+        if len(nums) == 1 and k >=1: return '0'
+
+        stck = [nums[0]]
+
+        for i in range(1, len(nums)):
+            while stck and int(stck[-1]) > int(nums[i]) and k > 0:
                 stck.pop()
                 k -= 1
-            stck.append(n)
+            stck.append(nums[i])
 
-        while stck and k > 0:
-            stck.pop()
-            k -= 1
+        while stck and stck[0] == '0': stck.pop(0)
 
-        idx = 0
-        while stck and idx < len(stck) and stck[idx] == '0':
-            idx += 1
+        res = ''.join(stck[:-k]) if k > 0 else ''.join(stck)
 
-        return ''.join(stck[idx:]) if len(stck[idx:]) > 0 else '0'
+        return res  or '0'      
+
