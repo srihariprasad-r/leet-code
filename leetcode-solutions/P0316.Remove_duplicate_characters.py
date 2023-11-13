@@ -13,3 +13,23 @@ class Solution:
                 stck.append(s[i])
 
         return ''.join(stck)
+
+# wrong submission
+class Solution:
+    def removeDuplicateLetters(self, s: str) -> str:
+        c = set()
+        st = ''
+        el = ''
+        stck = []
+        cnt = [0] * 26
+
+        for i in s:
+            cnt[ord(i) - ord('a')] += 1
+
+        for c in s:
+            while stck and ord(stck[-1]) >= ord(c) and cnt[ord(stck[-1]) - ord('a')] > 1:
+                cnt[ord(stck[-1]) - ord('a')] -= 1
+                stck.pop()
+            stck.append(c)
+
+        return ''.join(stck)
