@@ -33,3 +33,30 @@ class Solution:
                 c += res[i][j]
 
         return c % (10**9+7)
+
+# wrong submission
+class Solution:
+    def sumSubarrayMins(self, arr: List[int]) -> int:
+        prev = [i+1 for i in range(len(arr))]
+        nxt = [len(arr)-i for i in range(len(arr))]
+        stck = []
+        ans = 0
+
+        for i in range(len(arr)):
+            while stck and arr[stck[-1]] > arr[i]:
+                x = stck.pop()
+            if stck: prev[i] = i - stck[-1]
+            stck.append(i)
+
+        stck = []
+
+        for i in range(len(arr)):
+            while stck and arr[stck[-1]] > arr[i]:
+                x = stck.pop()
+                nxt[x] = i - x
+            stck.append(i)
+
+        for i in range(len(arr)):
+            ans += (prev[i]*nxt[i]*arr[i]) % 100_000_007
+
+        return ans
