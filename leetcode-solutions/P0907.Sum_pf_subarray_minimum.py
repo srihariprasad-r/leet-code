@@ -17,3 +17,19 @@ class Solution(object):
             stck.append(idx)
 
         return sum % (10**9+7)
+
+# wrong submission
+class Solution:
+    def sumSubarrayMins(self, arr: List[int]) -> int:
+        c = 0
+        res = [[float('inf') for _ in range(len(arr))] for _ in range(len(arr))]
+
+        for i in range(len(arr)):
+            for j in range(i,len(arr)):
+                if i == j:
+                    res[i][j] = arr[i]
+                else:
+                    res[i][j] = min(min(arr[i:j+1]), res[i][j])
+                c += res[i][j]
+
+        return c % (10**9+7)
