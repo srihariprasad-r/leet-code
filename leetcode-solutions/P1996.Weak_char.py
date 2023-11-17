@@ -1,8 +1,6 @@
-# wrong submission
-
 class Solution:
     def numberOfWeakCharacters(self, properties: List[List[int]]) -> int:
-        properties = sorted(properties, key=lambda x:-x[0])
+        properties = sorted(properties, key=lambda x:(-x[0],x[1]))
 
         stck = [properties[0]]
         c = 0
