@@ -1,5 +1,3 @@
-# wrong submission
-
 class Solution:
     def maximumRobots(self, chargeTimes: List[int], runningCosts: List[int], budget: int) -> int:
         i = 0
@@ -16,10 +14,12 @@ class Solution:
 
             rc += runningCosts[j] 
             tc = stck[0] + (j-i+1) *  rc
-            while j >= i and tc > budget:
+            while tc > budget:
+                if stck and stck[0] == chargeTimes[i]:
+                    stck.pop(0)
                 rc -= runningCosts[i] 
                 i += 1
-                tc = stck[0] + (j-i+1) *  rc
+                tc = stck[0] + (j-i+1) *  rc if stck else 0
             
             res = max(res, j- i+1)
 
