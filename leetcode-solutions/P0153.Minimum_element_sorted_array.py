@@ -71,3 +71,23 @@ class Solution:
                 r = mid - 1
 
         return -1
+
+# Method 4
+class Solution:
+    def findMin(self, arr: List[int]) -> int:
+        ans = float('inf')
+        l = 0
+        h = len(arr) - 1
+
+        if arr[l] <= arr[h]: return arr[l]
+
+        while l <= h:
+            mid = l + (h-l) // 2
+            if arr[mid] >= arr[l]:
+                ans = min(ans, arr[l])
+                l = mid + 1
+            else:
+                h = mid - 1
+                ans = min(ans, arr[mid])
+
+        return ans
