@@ -1,28 +1,32 @@
-# wrong submission
-
 class Solution:
     def findPeakGrid(self, arr: List[List[int]]) -> List[int]:
         m = len(arr)
         n = len(arr[0])
 
-        for i in range(len(arr)):
-            tmp = [-1]
-            tmp.extend(arr[i])
-            tmp.append(-1)
-            arr[i] = tmp
+        def f(arr, c):
+            mx = float('-inf')
+            idx = -1
+            for i in range(len(arr)):
+                if mx < arr[i][c]:
+                    mx = arr[i][c]
+                    idx = i
+
+            return idx
 
         l = 0
-        h = m * n - 1
+        h = n - 1
 
         while l <= h:
             mid = l +(h-l)//2
-            row = mid // n
-            col = mid % n
+            mx_idx = f(arr, mid)
 
-            if arr[row][col] > arr[row-1][col-1] and arr[row][col] > arr[row-1][col-1]:
-                return [row, col]
+            left = arr[mx_idx][mid - 1] if mid >= 1 else -1
+            right = arr[mx_idx][mid + 1] if mid + 1 < n else -1 
+
+            if arr[mx_idx][mid] > left and arr[mx_idx][mid] > right:
+                return [mx_idx, mid]
             
-            if arr[row][col] > arr[row-1][col-1]:
+            if arr[mx_idx][mid] > left:
                 l = mid + 1
             else:
                 h = mid - 1
