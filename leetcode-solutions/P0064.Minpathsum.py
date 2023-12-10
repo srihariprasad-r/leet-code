@@ -102,3 +102,26 @@ class Solution:
             return dp[i][j]
 
         return recurse(0, 0, 0)
+
+# Method 2
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        dp = [[0] * len(grid[0]) for _ in range(len(grid))] 
+
+        def recurse(i, j):
+            if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]):
+                return float('inf')
+            
+            if i == 0 and j == 0: return grid[i][j]
+
+            if dp[i][j] > 0: return dp[i][j]
+
+            up = grid[i][j] + recurse(i-1, j)
+            left = grid[i][j] + recurse(i, j-1)
+
+            dp[i][j] = min(up, left)
+
+            return dp[i][j]
+
+        return recurse(len(grid)-1, len(grid[0])-1)
+
