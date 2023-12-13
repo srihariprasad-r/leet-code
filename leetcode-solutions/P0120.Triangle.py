@@ -32,3 +32,23 @@ class Solution:
                                       [j-(j == i)], triangle[i-1][j-(j > 0)])
 
         return min(triangle[-1])
+
+
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        n = len(triangle)
+        dp = [[-1 for _ in range(len(triangle))] for _ in range(len(triangle))]
+        def recurse(i, j):
+            if i == n-1: return triangle[i][j]
+
+            if i > n-1 or j > n-1: return float('inf')
+            if dp[i][j] != -1: return dp[i][j]
+
+            up = triangle[i][j] + recurse(i+1, j)
+            left = triangle[i][j] + recurse(i+1, j+1)
+
+            dp[i][j] = min(up, left)
+
+            return dp[i][j]
+
+        return recurse(0,0) 
