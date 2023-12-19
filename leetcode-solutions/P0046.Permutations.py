@@ -92,3 +92,22 @@ class Solution:
             return ans
 
         return recursion(nums)
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        ans = []
+        def subset(idx, arr, visited):
+            if len(arr) == len(nums): ans.append(arr[:])
+            
+            for i in range(len(nums)):
+                if visited[i]: continue 
+                arr.append(nums[i])
+                visited[i] =  1
+                subset(i+1, arr, visited)
+                arr.pop()
+                visited[i] = 0
+                
+            return ans
+
+        visited = [0] * len(nums)
+        return subset(0, [], visited)
