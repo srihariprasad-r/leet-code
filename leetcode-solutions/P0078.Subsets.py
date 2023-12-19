@@ -60,3 +60,20 @@ class Solution:
             return ans
 
         return recursion(0, nums)
+
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        ans = []
+        def recurse(idx, arr):
+            ans.append(arr[:])
+            
+            for i in range(idx, len(nums)):
+                arr.append(nums[i])
+                recurse(i+1, arr)
+                arr.pop()
+                
+            return ans
+
+        return recurse(0,[])
+            
