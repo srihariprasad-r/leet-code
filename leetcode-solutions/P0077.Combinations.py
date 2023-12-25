@@ -39,3 +39,22 @@ class Solution:
             return res
         
         return dfs(1, [], [])
+
+# method 3
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        ans = []
+        def recurse(idx, k, a):
+            if k == len(a):
+                ans.append(a[:])
+                return
+            # ans.append(a[:])
+    
+            for i in range(idx, n+1):
+                a.append(i)
+                recurse(i + 1,k, a)
+                a.pop()
+        
+            return ans
+
+        return recurse(1,k,[])
