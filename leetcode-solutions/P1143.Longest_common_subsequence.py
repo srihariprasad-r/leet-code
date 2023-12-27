@@ -45,3 +45,27 @@ class Solution:
                 return max(recurse(i, j-1),recurse(i-1, j))
 
         return recurse(len(text1)-1, len(text2)-1)
+
+# Memonization
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        dp = [[-1 for _ in range(len(text2))] for _ in range(len(text1))]
+        def recurse(i, j, dp):
+            if i < 0 or j < 0:
+                return 0
+
+            if dp[i][j] > -1: return dp[i][j]
+
+            a = float('-inf')
+            if text1[i] == text2[j]:
+                a =  1 + max(a, recurse(i-1, j-1, dp))
+            else:
+                l = recurse(i, j-1, dp)
+                r = recurse(i-1, j, dp)
+                a = max(a, max(l,r))
+
+            dp[i][j] = a
+
+            return dp[i][j]
+
+        return recurse(len(text1)-1, len(text2)-1, dp)
