@@ -30,3 +30,18 @@ class Solution:
 
 
         return dp[0][0] 
+
+# TLE
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        mx = float('-inf')
+        def recurse(i, j):
+            if i < 0 or j < 0:
+                return 0
+
+            if text1[i] == text2[j]:
+                return 1 + recurse(i-1, j-1)
+            else:
+                return max(recurse(i, j-1),recurse(i-1, j))
+
+        return recurse(len(text1)-1, len(text2)-1)
