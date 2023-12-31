@@ -57,3 +57,41 @@ class Solution:
                     dp[i][j] = 1
                     
         return dfs(0, len(s)-1, dp)
+
+# generate all subsets
+class Solution:
+    def longestPalindromeSubseq(self, s: str) -> int:
+        ans = []
+
+        def palindrome(st):
+            i = 0
+            j = len(st) - 1
+
+            while i < j:
+                if not st[i] == st[j]:
+                    return False
+                
+                i += 1
+                j -= 1
+            
+            return True
+
+        def recurse(idx, arr):
+            ans.append(''.join(arr))
+
+            for i in range(idx, len(s)):
+                arr.append(s[i])
+                recurse(i+1, arr)
+                arr.pop()
+
+            return ans
+
+        o = recurse(0, [])
+        # print(o)
+        mx = float('-inf')
+        
+        for i in range(len(o)):
+            if palindrome(o[i]):
+                mx = max(mx, len(o[i]))
+
+        return mx
