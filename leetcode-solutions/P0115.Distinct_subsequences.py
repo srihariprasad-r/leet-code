@@ -18,3 +18,21 @@ class Solution(object):
                     dp[i][j] = dp[i-1][j]
 
         return dp[len(s)][len(t)]
+
+# TLE
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        ans = 0
+        def recurse(i, j):
+            if j < 0: return 1
+            if i < 0 : return 0
+
+            a = 0
+            if s[i] == t[j]:
+                a += recurse(i-1, j-1) + recurse(i-1, j)
+            else:
+                a += recurse(i-1, j)
+
+            return a
+
+        return recurse(len(s)-1, len(t)-1)
