@@ -30,6 +30,7 @@ class Solution(object):
 # TLE
 class Solution:
     def isMatch(self, s: str, p: str) -> bool:
+        dp = [[-1 for _ in range(len(p))] for _ in range(len(s))]
         def recurse(i, j):
             if i < 0 and j < 0: 
                 return True
@@ -42,10 +43,16 @@ class Solution:
                 return True
                 # return all(True for a in s if a == '*')
 
+            if dp[i][j] != -1: return dp[i][j]
+
             if (s[i] == p[j]) or (p[j] == '?'):
-                return recurse(i-1, j-1)
+                dp[i][j] =  recurse(i-1, j-1)
             elif p[j] == '*':
-                return recurse(i,j-1) or recurse(i-1, j)
+                dp[i][j] =  recurse(i,j-1) or recurse(i-1, j)
+            else:
+                dp[i][j] = False
+
+            return dp[i][j]
                     
             # return False
 
