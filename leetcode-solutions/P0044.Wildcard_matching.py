@@ -26,3 +26,19 @@ class Solution(object):
                     dp[i][j] = dp[i-1][j] or dp[i][j-1]
 
         return dp[-1][-1]
+
+# wrong submission
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        def recurse(i, j):
+            if i > 0 and j < 0: return False
+            if i < 0 and j > 0:
+                return all(True for a in s if a == '*')
+            if i < 0 and j < 0: return True
+
+            if s[i] == s[j] or s[j] == '?':
+                return recurse(i-1, j-1)
+            else:
+                return recurse(i-1,j) or recurse(i, j-1)
+
+        return recurse(len(s)-1, len(p)-1)

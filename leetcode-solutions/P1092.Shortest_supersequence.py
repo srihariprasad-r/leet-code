@@ -47,4 +47,4 @@ class Solution:
             c += str2[n]
             n -= 1
 
-        return c
+        return c[::-1]
