@@ -22,36 +22,23 @@ class Solution(object):
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         mx = float('-inf')
-        ans = list()
+        dp = [[0] * len(nums)]*len(nums)
 
-        def increasing(l):
-            if len(l) == 1: return True
-            i = 0
-            j = 1
-            if l[i] > l[j]: return False
-            while j < len(l):
-                if l[i] > l[j]:
-                    return False
-                i += 1
-                j += 1
+        def recurse(idx, pre_idx):
+            if idx >= len(nums):
+                return 0
 
-            return True
-            
-        def recurse(idx,arr):
-            if arr and arr not in ans: ans.append(arr[:])
+            if dp[idx][pre_idx+1] > 0: return dp[idx][pre_idx+1]
 
-            for i in range(idx, len(nums)):
-                arr.append(nums[i])
-                recurse(i+1,arr)
-                arr.pop()
-                # recurse(idx+1, arr)
+            no_take =  recurse(idx+1, pre_idx)
+            take = float('-inf')
+            if pre_idx == -1 or nums[idx] > nums[pre_idx]:
+                take = 1 + recurse(idx+1, idx)
 
-            return ans
+            mx = max(take, no_take)
 
-        ls = recurse(0, [])
-        # print(ls)
-        for l in ls:
-            if increasing(l):
-                mx = max(mx, len(set(l)))
+            dp[idx][pre_idx+1] = mx
 
-        return mx
+            return mx
+
+        return recurse(0, -1) 
