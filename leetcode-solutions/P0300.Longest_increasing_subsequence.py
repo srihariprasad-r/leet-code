@@ -18,12 +18,12 @@ class Solution(object):
             
         return res
 
-# wrong submission
+# TLE
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         mx = float('-inf')
         ans = list()
-        
+
         def increasing(l):
             if len(l) == 1: return True
             i = 0
@@ -52,6 +52,6 @@ class Solution:
         # print(ls)
         for l in ls:
             if increasing(l):
-                mx = max(mx, len(l))
+                mx = max(mx, len(set(l)))
 
         return mx
