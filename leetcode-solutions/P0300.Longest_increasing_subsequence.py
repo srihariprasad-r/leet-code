@@ -18,27 +18,17 @@ class Solution(object):
             
         return res
 
-# TLE
+# Method 2
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         mx = float('-inf')
-        dp = [[0] * len(nums)]*len(nums)
+        if len(set(nums)) == 1: return 1
+        dp = [1] * len(nums)
 
-        def recurse(idx, pre_idx):
-            if idx >= len(nums):
-                return 0
+        for i in range(len(nums)):
+            for pre_idx in range(0, i):
+                if nums[i] > nums[pre_idx]:
+                    dp[i] = max(dp[i], dp[pre_idx]  + 1)
+                    mx = max(mx, dp[i])
 
-            if dp[idx][pre_idx+1] > 0: return dp[idx][pre_idx+1]
-
-            no_take =  recurse(idx+1, pre_idx)
-            take = float('-inf')
-            if pre_idx == -1 or nums[idx] > nums[pre_idx]:
-                take = 1 + recurse(idx+1, idx)
-
-            mx = max(take, no_take)
-
-            dp[idx][pre_idx+1] = mx
-
-            return mx
-
-        return recurse(0, -1) 
+        return 1 if mx == float('-inf') else mx
