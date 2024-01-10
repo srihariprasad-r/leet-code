@@ -42,28 +42,37 @@ class Solution:
 
         return False
 
-# wrong submission
+# Method 2
 class Solution:
     def containsCycle(self, grid: List[List[str]]) -> bool:
-        q = deque()
+        # q = deque()
         visited = [[0 for _ in range(len(grid[0]))] for _ in range(len(grid))]
 
-        q.append((0,0, -1, -1))
-        visited[0][0] = 1
+        def bfs(r, c):
+            q = deque()
+            q.append((r,c, -1, -1))
+            visited[r][c] = 1
 
-        while q:
-            i, j, src_i, src_j = q.popleft()
-            # if visited[i][j]: return True
+            while q:
+                i, j, src_i, src_j = q.popleft()
+                # if visited[i][j]: return True
 
-            direction = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+                direction = [(0, -1), (0, 1), (-1, 0), (1, 0)]
 
-            for d in direction:
-                x = i + d[0]
-                y = j + d[1]
-                if x > -1 and x < len(grid) and y > -1 and y < len(grid[0])\
-                    and not visited[x][y] and grid[x][y] == grid[i][j]:
-                    if visited[i][j]: return True
-                    visited[x][y] = 1
-                    q.append(x, y, i, j)
+                for d in direction:
+                    x = i + d[0]
+                    y = j + d[1]
+                    if x > -1 and x < len(grid) and y > -1 and y < len(grid[0])\
+                        and grid[x][y] == grid[i][j] and (x, y) != (src_i,src_j):
+                        if visited[x][y]: return True
+                        visited[x][y] = 1
+                        q.append((x, y, i, j))
+
+            return False
+
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if not visited[i][j] and bfs(i, j):
+                    return True
 
         return False
