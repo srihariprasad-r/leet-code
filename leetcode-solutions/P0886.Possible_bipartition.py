@@ -34,7 +34,7 @@ class Solution:
 
         return True
 
-# wrong submission
+# TLE
 class Solution:
     def possibleBipartition(self, n: int, dislikes: List[List[int]]) -> bool:
         lst = collections.defaultdict(list)
@@ -49,13 +49,13 @@ class Solution:
 
             visited[node] = color
             for n in lst[node]:
-                if dfs(n, 1-color):
-                    return True
+                if not dfs(n, 1-color):
+                    return False
 
-            return False
+            return True
 
         for i in range(1,n+1):
-            if visited[i] == -1 and dfs(i, 1):
-                return True
+            if visited[i] == -1 and not dfs(i, 1):
+                return False
 
-        return False
+        return True
