@@ -33,3 +33,29 @@ class Solution:
                         q.append(e)
 
         return True
+
+# wrong submission
+class Solution:
+    def possibleBipartition(self, n: int, dislikes: List[List[int]]) -> bool:
+        lst = collections.defaultdict(list)
+        visited = [-1] * (n+1)
+
+        for i in range(len(dislikes)):
+            lst[dislikes[i][0]].append(dislikes[i][1])
+            lst[dislikes[i][1]].append(dislikes[i][0])
+
+        def dfs(node, color):
+            if visited[node] != -1: return visited[node] == color
+
+            visited[node] = color
+            for n in lst[node]:
+                if dfs(n, 1-color):
+                    return True
+
+            return False
+
+        for i in range(1,n+1):
+            if visited[i] == -1 and dfs(i, 1):
+                return True
+
+        return False
