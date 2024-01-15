@@ -70,3 +70,36 @@ class Solution:
                 tpsort(i, stck)
 
         return stck
+
+# Method 3
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        visited = [0] * (numCourses+1)
+        path = [0] * (numCourses+1)
+        stck = []
+        lst = collections.defaultdict(list)
+
+        for i in range(len(prerequisites)): 
+            lst[prerequisites[i][0]].append(prerequisites[i][1])       
+
+        def dfs(node):
+            visited[node] = 1
+            path[node] = 1
+
+            for n in lst[node]:
+                if not visited[n]:
+                    if dfs(n): return True
+                elif path[n]: return True
+
+            path[node] = 0
+            stck.append(node)
+
+            return False
+
+        hasCycle = True
+        for i in range(numCourses):
+            if not visited[i]:
+                if dfs(i):
+                    return []
+        
+        return stck
