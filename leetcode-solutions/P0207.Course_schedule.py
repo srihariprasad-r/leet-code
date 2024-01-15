@@ -27,28 +27,35 @@ class Solution:
 
         return not self.course
 
-# wrong submission
+# Method 2
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         lst  = collections.defaultdict(list)
 
         visited = [0] * (numCourses+1)
+        path = [0] * (numCourses+1)
         for i in range(len(prerequisites)):
             lst[prerequisites[i][0]].append(prerequisites[i][1])
         
         def dfs(node):
-            if visited[node] != 0: return False
-
             visited[node] = 1
+            path[node] = 1
+
             for n in lst[node]:
-                if not dfs(n):
-                    return False
+                if not visited[n]:
+                    if dfs(n):
+                        return True
+                elif path[n]:
+                    return True
 
-            return True
+            path[node] = 0
 
-        for i in range(len(prerequisites)):
-            for j in range(len(prerequisites[i])):
-                if not visited[prerequisites[i][j]] and not dfs(prerequisites[i][j]):
-                    return False
+            return False
+        
+        hascycle = False
+        for i in range(numCourses+1):
+            if visited[i] == 0:
+                if dfs(i):
+                    hascycle = True
 
-        return True 
+        return not hascycle 
