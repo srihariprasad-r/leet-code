@@ -25,3 +25,36 @@ class Solution(object):
                         mat[row][col] = mat[row][col+1] + 1
 
         return mat
+
+# wrong submission
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        q = deque()
+        visited = [[0 for _ in range(len(mat[0]))] for _ in range(len(mat))]
+        directions = [(0, -1),(0,1), (-1,0), (1,0)]
+        
+        for i in range(len(mat)):
+            for j in range(len(mat[i])):
+                if mat[i][j] == 0:
+                    q.append((i, j, 0))
+                    visited[i][j] = 1
+
+        
+        while q:
+            x, y, dst = q.popleft()
+            mat[x][y] = dst
+
+            for d in directions:
+                newx = x + d[0]
+                newy = y + d[1]
+
+                if newx > -1 and newx < len(mat) \
+                    and newy > -1 and newy < len(mat[0]) and not visited[newx][newy]:
+                    # if mat[newx][newy] == 0:
+                    #     dst = dst + 1
+                    if mat[newx][newy] != 0:
+                        # mat[x][y] += dst
+                        q.append((newx, newy, dst + 1))
+                        
+
+            return mat
