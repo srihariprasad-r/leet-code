@@ -18,7 +18,7 @@ class Solution:
                     visited[i][j] = 1
 
         while q:
-            x, y = q.pop()
+            x, y = q.popleft()
 
             visited[x][y] = 1
             surrounded = False
@@ -26,8 +26,12 @@ class Solution:
             for d in directions:
                 newx = x + d[0]
                 newy =  y + d[1]
-                if board[newx][newy] == 'X':
+                if newx > 0 and newx < m -1 and newy > 0 and newy < n- 1 and \
+                    board[newx][newy] == 'X' and not visited[newx][newy]:
                     surrounded = True
+                    visited[newx][newy] = 1
+                # else:
+                #     surrounded = False
 
             if surrounded:
                 board[x][y] = 'X'
