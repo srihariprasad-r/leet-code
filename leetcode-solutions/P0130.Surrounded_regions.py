@@ -1,5 +1,3 @@
-# wrong submission
-
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
         """
@@ -21,21 +19,18 @@ class Solution:
         while q:
             x, y = q.popleft()
 
-            visited[x][y] = 1
-
             for d in directions:
                 newx = x + d[0]
                 newy =  y + d[1]
-                if newx > 0 and newx < m -1 and newy > 0 and newy < n- 1 \
+                if newx >= 0 and newx < m  and newy >= 0 and newy < n \
                     and not visited[newx][newy]:
                     if board[newx][newy] == 'O': 
-                        board[newx][newy] = '#'
-                    visited[newx][newy] = 1
-
+                        visited[newx][newy] = 1
+                        q.append((newx, newy))
 
         for i in range(1, m-1):
             for j in range(1,n-1):
-                if board[i][j] == 'O':
+                if visited[i][j] == 0 and board[i][j] == 'O':
                     board[i][j] = 'X'
                     
         return board
