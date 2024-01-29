@@ -28,3 +28,30 @@ class Solution:
             return t 
 
         return dfs(src, dct, 0, float('inf') , k+1, visited)
+
+# wrong submission
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        lst = collections.defaultdict(list)
+        cost = [float('inf')]*(n+1)
+        mx = float('inf')
+
+        for f in flights:
+            lst[f[0]].append((f[1],f[2]))
+
+        q = deque()
+        q.append((src,0, k))
+        cost[src] = 0  
+
+        while q:
+            node, c, v = q.popleft()
+            
+            if node == dst and v == 0: 
+                return c
+
+            for l in lst[node]:
+                if v >= 0 and c + l[1] < cost[l[0]]:
+                    q.append((l[0] , l[1]+ c, v - 1))
+                    cost[l[0]] = c + l[1]
+
+        return -1 if cost[dst] == float('inf') else cost[dst]
