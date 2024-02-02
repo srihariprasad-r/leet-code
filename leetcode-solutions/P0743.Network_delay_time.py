@@ -27,6 +27,7 @@ class Solution:
         lst = collections.defaultdict(list)
         distance = [float('inf')]*(n+1)
         visited = [0]*(n+1)
+        mx = float('-inf')
         all_nodes_visited = True
         last_node = 0
 
@@ -52,4 +53,7 @@ class Solution:
         for i in range(1, len(visited)): 
             if visited[i] == 0: all_nodes_visited = False
 
-        return -1 if not all_nodes_visited else distance[last_node]
+        for i in range(1, len(distance)): 
+            if distance[i] > mx: mx = distance[i]
+
+        return -1 if not all_nodes_visited else mx
