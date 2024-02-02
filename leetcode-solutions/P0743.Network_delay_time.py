@@ -26,21 +26,30 @@ class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
         lst = collections.defaultdict(list)
         distance = [float('inf')]*(n+1)
-
+        visited = [0]*(n+1)
+        all_nodes_visited = True
+        last_node = 0
 
         for t in times:
             lst[t[0]].append((t[1], t[2]))
 
         q =  deque()
-        q.append((k, 0))
+        q.append(k)
         distance[k] = 0
+        visited[k] = 1
 
         while q:
-            node, d = q.popleft()
+            node = q.popleft()
+            visited[node] = 1
+            last_node = node
 
             for l in lst[node]:
-                if l[1] + d < distance[l[0]]:
-                    distance[l[0]] = l[1] + d
-                    q.append((l[0], d + l[1]))
+                if l[1] + distance[node] < distance[l[0]]:
+                    distance[l[0]] = l[1] + distance[node]
+                    q.append(l[0])
+                    visited[l[0]] = 1
 
-        return -1 if d == 0 else d
+        for i in range(1, len(visited)): 
+            if visited[i] == 0: all_nodes_visited = False
+
+        return -1 if not all_nodes_visited else distance[last_node]
