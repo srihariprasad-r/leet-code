@@ -26,4 +26,4 @@ class Solution:
                 elif d + l[1] == distance[l[0]]:
                     t[l[0]] += t[node]
 
-        return t[n-1]%100_000_000
+        return t[n-1]
