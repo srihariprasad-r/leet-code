@@ -9,21 +9,21 @@ class Solution:
             lst[l[0]].append((l[1], l[2]))
             lst[l[1]].append((l[0], l[2]))
 
-        q = deque()
-        q.append(0)
+        q = []
+        q.append((0,0))
+        heapq.heapify(q)
         distance[0] = 0
-        t[0] = 0
+        t[0] = 1
 
         while q:
-            node = q.popleft()
+            d, node = heapq.heappop(q)
 
             for l in lst[node]:
-                if distance[node]  + l[1] < distance[l[0]]:
-                    distance[l[0]] = distance[node] + l[1]
-                    q.append(l[0])
+                if d  + l[1] < distance[l[0]]:
+                    distance[l[0]] = d + l[1]
+                    heapq.heappush(q,(d+l[1],l[0]))
                     t[l[0]] = t[node]
-
-                if distance[node]  + l[1] == distance[l[0]]:
-                    t[l[0]] += 1
+                elif d + l[1] == distance[l[0]]:
+                    t[l[0]] += t[node]
 
         return t[n-1]%100_000_000
