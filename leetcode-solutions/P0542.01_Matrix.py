@@ -55,3 +55,33 @@ class Solution:
                         visited[newx][newy] = 1
 
         return mat
+
+# Method 3  - almost same
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        q = deque()
+        m = len(mat)
+        n = len(mat[0])
+        visited = [[0 for _ in range(len(mat[0]))] for _ in range(len(mat))]
+        directions = [(0, -1),(0,1), (-1,0), (1,0)]
+        
+        for i in range(len(mat)):
+            for j in range(len(mat[0])):
+                if mat[i][j] == 0:
+                    q.append((i, j, 0))
+
+        while q:
+            x, y, dst = q.popleft()
+            visited[x][y] = 1
+
+            for d in directions:
+                newx = x + d[0]
+                newy = y + d[1]
+                if newx > -1 and newx < m and newy > -1 and newy < n \
+                and visited[newx][newy] == 0:
+                    if mat[newx][newy] == 1 :
+                        q.append((newx, newy, dst + 1))
+                        mat[newx][newy] = dst + 1
+                        visited[newx][newy] = 1
+
+        return mat
