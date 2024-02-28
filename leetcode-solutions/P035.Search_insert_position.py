@@ -18,3 +18,22 @@ class Solution(object):
                 b = mid - 1            
     
         return a
+
+# Method 2
+class Solution:
+    def searchInsert(self, arr: List[int], target: int) -> int:
+        l = 0
+        r = len(arr)
+
+        while l < r:
+            mid = l + (r - l) // 2
+
+            if arr[mid] == target:
+                return mid
+
+            if arr[mid] < target:
+                l = mid + 1
+            else:
+                r = mid
+
+        return l      
