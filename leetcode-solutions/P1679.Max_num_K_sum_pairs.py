@@ -5,7 +5,7 @@ class Solution:
         import collections
         d = collections.defaultdict(int)
         used = collections.defaultdict(int)
-        visited = [0] * (max(arr)+1)
+
         cnt = 0
 
         for i in range(len(arr)):
@@ -19,7 +19,7 @@ class Solution:
             if arr[i] not in used:
                 if k-arr[i] not in used:
                     if arr[i] == k-arr[i]:
-                        if d[arr[i]] > 1: cnt += 1
+                        cnt += d[arr[i]] // 2
                     else:
                         cnt += min(d[arr[i]], d[k-arr[i]])
                     used[arr[i]] = i
