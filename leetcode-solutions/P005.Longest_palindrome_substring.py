@@ -63,3 +63,66 @@ class Solution:
                 r += 1
 
         return res
+
+# Method 3:
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        dp = [[0 for _ in range(len(s))] for _ in range(len(s))]
+
+        ans = 0
+        mx = ''
+        for i in range(len(s)):
+            dp[i][i] = 1
+            if ans < 1:
+                ans = 1
+                mx = s[i]
+
+        l = 1
+        i = 0
+        while i < len(s) - 1:
+            if s[i] == s[i+1]:
+                dp[i][i+1] = 1
+                if ans < 2 :
+                    ans = 2
+                    mx = s[i:i+ans]
+            i += 1
+
+        l = 3
+        while l <= len(s):
+            i = 0
+            while i < len(s) - l + 1:
+                j = i + l - 1
+                if s[i] == s[j] and dp[i+1][j-1] == 1:
+                    dp[i][j] = 1
+                    mx = s[i:i+l]
+                i += 1
+            l += 1
+
+        return mx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
