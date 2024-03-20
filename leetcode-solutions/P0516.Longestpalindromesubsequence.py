@@ -119,3 +119,37 @@ class Solution:
             return c
         
         return lcs(len(s1)-1 , len(s1)-1)
+
+# Method 4
+class Solution:
+    def longestPalindromeSubseq(self, s: str) -> int:
+        dp = [[0 for _ in range(len(s))] for _ in range(len(s))]
+
+        mx = 0
+        for i in range(len(s)):
+            dp[i][i] = 1
+            mx = 1
+
+        i = 0
+        while i < len(s) - 1:
+            if s[i] == s[i+1]:
+                dp[i][i+1] = 2
+            else:
+                dp[i][i+1] = 1
+            mx = max(mx, dp[i][i+1])
+            i += 1
+
+        l = 3
+        while l <= len(s):
+            i = 0
+            while i < len(s) - l + 1:
+                j = i + l - 1
+                if s[i] == s[j]:
+                    dp[i][j] = max(2 + dp[i+1][j-1], dp[i][j])
+                else:
+                    dp[i][j] = max(dp[i][j-1] , dp[i+1][j])
+                mx = max(mx, dp[i][j]) % (100_000_007)
+                i += 1
+            l += 1
+
+        return mx
