@@ -16,3 +16,20 @@ class Solution:
                     ans.append((x, y))
 
         return ans
+
+# Method 2
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals = sorted(intervals, key=lambda x: x[0])
+
+        s = [intervals[0]]
+        
+        for i in range(1,len(intervals)):
+            e, v = s[-1]
+            if v >= intervals[i][0]:
+                s.pop(-1)
+                s.append((e, intervals[i][1] if v < intervals[i][1] else v))
+            else:
+                s.append(intervals[i])
+
+        return s  
