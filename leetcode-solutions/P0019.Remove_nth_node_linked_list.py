@@ -28,7 +28,7 @@ class Solution(object):
         
         return head
 
-# Method 2 - wrong submission
+# Method 2
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -45,15 +45,15 @@ class Solution:
             tmp = tmp.next
             c += 1
 
-        t = 0
-        prev = None
+        if c == n: return head.next
+
+        t = 1
         tmp = head
         
         while t < c - n :
-            prev = tmp
             tmp = tmp.next
             t += 1
 
-        prev.next = tmp.next
+        tmp.next = tmp.next.next
 
         return head
