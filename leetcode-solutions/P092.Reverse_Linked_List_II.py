@@ -33,7 +33,7 @@ class Solution(object):
         
         return dummy.next
 
-# Method 2 - TLE
+# Method 2
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -43,44 +43,20 @@ class Solution:
     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
         if not head: return None
 
-        a = head
-        l = 1
-        
-        while a.next:
-            l += 1
-            a = a.next
-        
-        if l == 1: return head
+        dummy = ListNode(None)
+        dummy.next = head
 
-        a = head
-        c = 1
+        pre = dummy
 
-        while a.next:
-            if c < left:
-                c += 1
-            else: break
-            a = a.next
+        for _ in range(left-1):
+            pre = pre.next
 
-        tmp = a
-        prev = None
+        cur = pre.next
 
-        while tmp:
-            if c <= right:
-                c += 1
-            else:
-                r = tmp
-                break
-            cur = tmp.next
-            tmp.next = prev
-            prev = tmp
-            tmp = cur
+        for i in range(right-left):
+            frw = cur.next
+            cur.next = frw.next
+            frw.next = pre.next
+            pre.next = frw
 
-        a = head
-        a.next = prev
-
-        if r:
-            while a.next:
-                a = a.next
-            a.next = r
-
-        return head
+        return dummy.next
