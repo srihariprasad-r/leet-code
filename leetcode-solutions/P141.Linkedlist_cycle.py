@@ -23,7 +23,7 @@ class Solution(object):
                 return True
         return False
 
-# Method 2 - wrong submission
+# Method 2 - almost same
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -33,15 +33,14 @@ class Solution(object):
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         if not head or not head.next: return False
-        
+
         fast = head
         slow = head
 
-        while fast.next.next and slow.next:
+        while fast and fast.next:
             fast = fast.next.next
             slow = slow.next
 
             if fast == slow: return True
 
         return False
-        
