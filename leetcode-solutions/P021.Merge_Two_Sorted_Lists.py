@@ -35,3 +35,37 @@ class Solution(object):
                 l3.next = l2;
         
         return head.next
+    
+# Method 2 - wrong submission
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        if not list1: return list2
+        if not list2: return list1
+        dummy = ListNode(None)
+        end = dummy
+        p = 1
+        q = 1
+
+        c1 = list1
+        c2 = list2
+        while c1 and c2:
+            if c1.val > c2.val:
+                end.next = ListNode(c2.val)
+                c2 = c2.next
+            elif c1.val < c2.val:
+                end.next = ListNode(c1.val)
+                c1 = c1.next
+            else:
+                end.next = ListNode(c1.val)
+                end = end.next
+                end.next = ListNode(c2.val)
+                c1 = c1.next
+                c2 = c2.next
+            end = end.next
+
+        return dummy.next
