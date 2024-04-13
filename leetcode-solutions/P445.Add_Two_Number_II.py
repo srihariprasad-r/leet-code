@@ -85,4 +85,71 @@ class Solution(object):
             
         return ret.next
                 
+# Method 2 - wrong submission
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        ln1 = 0
+        ln2 = 0
+
+        c1 = l1
+        while c1:
+            c1 = c1.next
+            ln1 += 1
         
+        c2= l2
+        while c2:
+            c2 = c2.next
+            ln2 += 1
+
+        c1 = l1
+        c2 = l2
+
+        # prev2 = None
+        # while c2:
+        #     tmp = c2.next
+        #     c2.next = prev2
+        #     prev2 = c2
+        #     c2 = tmp
+        #     ln2 += 1
+        
+        if ln1 != ln2:
+            d = ListNode(0)
+            t = d
+            t.next = l1 if ln1 < ln2 else l2
+
+
+        dummy = ListNode(None)
+        end = dummy
+        c = 0
+
+        if ln1 < ln2:
+            c1 = t 
+        elif ln1 > ln2:
+            c2 = t
+
+        while c1 and c2:
+            s = c1.val + c2.val
+            if c > 0:
+                s += c
+                c = 0
+            end.next = ListNode(s)
+            end = end.next
+            c1 = c1.next
+            c2 = c2.next
+            s = 0
+
+        e = dummy.next
+        prev = None
+        while e:
+            if e.val > 9:
+                prev.val +=  e.val//10
+                e.val = 0
+            prev = e
+            e = e.next
+
+        return dummy.next
