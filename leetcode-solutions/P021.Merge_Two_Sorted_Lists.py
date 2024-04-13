@@ -68,4 +68,12 @@ class Solution:
                 c2 = c2.next
             end = end.next
 
+        while c1:
+            end.next = ListNode(c1.val)
+            c1 = c1.next
+
+        while c2:
+            end.next = ListNode(c2.val)
+            c2 = c2.next
+            
         return dummy.next
