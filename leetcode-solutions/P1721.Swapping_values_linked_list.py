@@ -35,3 +35,47 @@ class Solution(object):
         p1.val = tmp
         
         return head
+
+# Method 2 - almost same
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if not head: return None
+        if not head.next: return head
+
+        l = 1
+
+        cur = head
+        while cur.next:
+            l += 1
+            cur = cur.next
+
+        prev_first = None
+        prev_last = None
+
+        m = head
+        cur = head
+        i = 1
+        while cur:
+            if i == k:
+                prev_first = cur
+                break
+            cur = cur.next
+            i += 1
+        
+        i = 0
+        cur = head
+        while cur:
+            if i == l-k:
+                prev_last = cur
+                break
+            cur = cur.next
+            i += 1
+
+        prev_first.val , prev_last.val =  prev_last.val,  prev_first.val
+
+        return head
