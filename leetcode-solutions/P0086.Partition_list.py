@@ -1,5 +1,4 @@
 # wrong submission
-
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -10,29 +9,22 @@ class Solution:
         cur = head
 
         prev = ListNode(-101)
-        prev.next = head
-        e = prev.next
+        e = prev
 
         greater = ListNode(-101)
         m = greater
 
         while cur:
             nxt = cur.next
-            if cur.val >= x and nxt.val >= x:   
+            if cur.val < x:
+                e.next = cur
+                e = e.next
+            else:
                 m.next = cur
                 m = m.next
-                m.next = nxt
-                cur = cur.next.next
-                m = m.next
-            else:
-                if cur.val < x:
-                    e.next = cur
-                else:
-                    m.next = cur
-                    m = m.next
-                    if nxt.val < x: m.next = None
-                    e = e.next
-                cur = nxt
+            cur = nxt
+
+        m.next = None
 
         a = prev
         while a.next:
