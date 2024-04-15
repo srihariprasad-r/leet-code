@@ -1,4 +1,3 @@
-# wrong submission
 # The isBadVersion API is already defined for you.
 # def isBadVersion(version: int) -> bool:
 
@@ -7,7 +6,7 @@ class Solution:
         l = 1
         r = n
 
-        while l < r:
+        while l <= r:
             mid = l + (r - l + 1)//2
             if isBadVersion(mid):
                 r = mid - 1
