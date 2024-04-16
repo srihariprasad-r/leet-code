@@ -1,11 +1,11 @@
-# wrong submission
 class Solution:
     def countPairs(self, nums: List[int], target: int) -> int:
         nums.sort()
         cnt = 0
         def bs(idx, tgt, n):
-            l = idx
-            r = len(nums) - 1
+            st = idx + 1
+            l = idx + 1
+            r = len(nums)
 
             while l < r:
                 mid = l + (r-l)//2
@@ -15,13 +15,13 @@ class Solution:
                 else: 
                     l = mid + 1
 
-            return l - idx
+            return l - st
 
         for i in range(len(nums)):
             res = -1
-            # if not (nums[i] >= target and nums[i] > 0):
-            res = bs(i+1, target, nums[i])
-            if 0 <= res <= len(nums) - 1:
-                cnt += res
+            if nums[i] >= target and nums[i] > 0: 
+                continue
+            res = bs(i, target, nums[i])
+            cnt += res
 
         return cnt
