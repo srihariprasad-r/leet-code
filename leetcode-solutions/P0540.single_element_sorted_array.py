@@ -16,3 +16,27 @@ class Solution(object):
                 right = mid
 
         return nums[left]
+
+# Method 2
+class Solution:
+    def singleNonDuplicate(self, nums: List[int]) -> int:
+        l = 0
+        r = len(nums)-1
+
+        while l < r:
+            mid = l + (r-l) //2
+ 
+            if nums[mid] == nums[mid-1]:
+                if mid % 2:
+                    l = mid +1
+                else:
+                    r = mid - 1
+            elif nums[mid] == nums[mid+1]:
+                if mid % 2:
+                    r = mid -1 
+                else:
+                    l = mid + 1
+            else:
+                return nums[mid]
+
+        return nums[l]
