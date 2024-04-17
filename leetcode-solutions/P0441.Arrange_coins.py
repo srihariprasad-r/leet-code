@@ -1,13 +1,12 @@
-# memory exceeded
 class Solution:
     def arrangeCoins(self, n: int) -> int:
-        arr = [i for i in range(n+1)]
+        # arr = [i for i in range(n+1)]
         
-        for idx in range(1, len(arr)):
-            arr[idx] += arr[idx-1]
+        # for idx in range(1, len(arr)):
+        #     arr[idx] += arr[idx-1]
 
         def staircase(i):
-            return arr[i]
+            return i * (i+1)//2
         
         l = 1
         r = n
