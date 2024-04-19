@@ -50,3 +50,33 @@ class Solution:
             heapq.heappop(arr)
         
         return -heapq.heappop(arr)
+    
+# Method 4
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        l = matrix[0][0]
+        r = matrix[-1][-1]
+        ans = 0
+
+        def f(a):
+            c = len(matrix[0]) - 1
+
+            res = 0
+            for r in range(len(matrix)):
+                while c >= 0 and matrix[r][c] > a:
+                    c -= 1
+
+                res += c + 1
+
+            return res
+
+        while l <= r:
+            mid = (r+l)//2
+
+            if f(mid) >= k:
+                ans = mid
+                r = mid - 1
+            else:
+                l = mid + 1
+
+        return ans
