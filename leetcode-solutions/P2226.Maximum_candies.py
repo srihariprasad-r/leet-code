@@ -1,4 +1,3 @@
-# wrong submission
 class Solution:
     def maximumCandies(self, candies: List[int], k: int) -> int:
         def f(n):
@@ -16,10 +15,10 @@ class Solution:
         r = max(candies)
 
         while l < r:
-            mid = l + (r-l) // 2
+            mid = r - (r-l) // 2
 
             if f(mid):
-                l = mid + 1
+                l = mid
             else:
                 r = mid - 1
 
