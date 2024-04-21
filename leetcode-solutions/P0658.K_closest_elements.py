@@ -43,22 +43,14 @@ class Solution(object):
 # wrong submission
 class Solution:
     def findClosestElements(self, nums: List[int], k: int, x: int) -> List[int]:
-        def closest(el):
-            cnt = 0
-            for a in nums:
-                if a <= x:
-                    cnt += 1
-            
-            return cnt == k
-
         l = 0
-        r = len(nums)- 1
+        r = len(nums)- k
 
         while l < r:
             mid = l + (r-l)//2
-            if closest(nums[mid]):
+            if abs(x-nums[mid]) <= abs(x-nums[mid+k]):
                 r = mid
             else:
                 l = mid + 1
 
-        return nums[k-l:l]
+        return nums[l:l+k]
