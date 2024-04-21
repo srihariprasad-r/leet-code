@@ -39,3 +39,26 @@ class Solution(object):
                 right = mid
 
         return arr[right: right+k]
+
+# wrong submission
+class Solution:
+    def findClosestElements(self, nums: List[int], k: int, x: int) -> List[int]:
+        def closest(el):
+            cnt = 0
+            for a in nums:
+                if a <= x:
+                    cnt += 1
+            
+            return cnt == k
+
+        l = 0
+        r = len(nums)- 1
+
+        while l < r:
+            mid = l + (r-l)//2
+            if closest(nums[mid]):
+                r = mid
+            else:
+                l = mid + 1
+
+        return nums[k-l:l]
