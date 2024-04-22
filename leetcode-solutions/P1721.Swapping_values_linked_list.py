@@ -79,3 +79,33 @@ class Solution:
         prev_first.val , prev_last.val =  prev_last.val,  prev_first.val
 
         return head
+# Method 3
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        cnt = 0
+        cur = head
+
+        while cur:
+            cur = cur.next
+            cnt += 1
+
+        def get_knode(node, l):
+            while l > 0 and node:
+                node = node.next
+                l -= 1
+            
+            return node
+
+        cur = head
+
+        kth_node = get_knode(cur, k-1)
+        last_kth_node = get_knode(cur, cnt-k)
+        
+        kth_node.val, last_kth_node.val = last_kth_node.val, kth_node.val
+
+        return head
