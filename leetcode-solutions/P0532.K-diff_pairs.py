@@ -33,34 +33,39 @@ class Solution(object):
 
         return cnt
 
-# Method 2 - wrong submission
+# Method 2
 class Solution:
     def findPairs(self, nums: List[int], k: int) -> int:
-        nums.sort()
-        cnt = 0
         st = set()
+        cnt = 0
 
-        def bs(idx, tgt, n):
+        nums.sort()
+
+        def bs(idx, x):
             l = 0
-            r = len(nums)-1
+            r = len(nums) - 1
 
             while l <= r:
-                mid = l + (r-l+1)//2
+                mid = l + (r-l)//2
 
-                if abs(tgt-n) == nums[mid]: return mid if mid != idx else -1
+                if nums[mid] == x: return True if mid != idx else False
 
-                if abs(tgt - n) < nums[mid]:
-                    r = mid - 1
-                else:
+                if nums[mid] < x:
                     l = mid + 1
+                else:
+                    r = mid - 1
 
-            return -1
+            return False
 
-        for i in range(len(nums)-1, -1, -1):
-            if ((nums[i], abs(k-nums[i])) not in st or not(i > 0 and nums[i] == nums[i-1])):
-                res = bs(i, k, nums[i])
-                if 0 <= res < len(nums):
-                    st.add((nums[i], abs(k-nums[i])))
-                    cnt += 1
+        for i in range(len(nums)):
+            res1 = bs(i, nums[i]+k) 
+            res2 = bs(i, nums[i]-k)
+            if res1:
+                o = (nums[i], nums[i]+k)  
+            elif res2:
+                o = (nums[i]-k, nums[i])
+            if ((res1 or res2) and (o not in st)):
+                cnt += 1
+                st.add(o)
 
         return cnt
