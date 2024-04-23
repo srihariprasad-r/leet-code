@@ -1,4 +1,4 @@
-# wrong submission
+# TLE
 class Solution:
     def smallestDistancePair(self, nums: List[int], k: int) -> int:
         q = []
@@ -6,7 +6,7 @@ class Solution:
         import copy
 
         def combinations(idx, r, cnt):
-            if cnt == len(nums)-1: 
+            if cnt == 2: 
                 res.append(copy.deepcopy(r))
                 return
                 
@@ -18,7 +18,7 @@ class Solution:
             return res
 
         c_arr = combinations(0, [], 0)
-        
+
         heapq.heapify(q)
         
         for i in range(len(c_arr)):
