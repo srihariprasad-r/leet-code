@@ -1,4 +1,3 @@
-# wrong submission
 class Solution:
     def minCost(self, nums: List[int], cost: List[int]) -> int:
         ans = float('inf')
@@ -6,15 +5,17 @@ class Solution:
         def f(x):
             return sum(abs(a-x)*b for a, b in zip(nums, cost))
 
-        l = 1
-        r = 100000
+        l = min(nums)
+        r = max(nums)
 
         while l < r:
             mid = l + (r-l)//2
-            if f(mid) < f(mid+1):
-                ans = min(ans, f(mid))
+            y1 = f(mid)
+            y2 = f(mid+1)
+            ans = min(ans, min(y1, y2))
+            if y1 < y2:
                 r = mid
             else:
                 l = mid + 1
 
-        return ans
+        return ans if ans != float('inf') else 0
