@@ -54,3 +54,24 @@ class Solution:
             return self.ans
 
         return dfs(root)
+
+# wrong submission
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sumOfLeftLeaves(self, root: Optional[TreeNode]) -> int:
+        def f(node, s, sm):
+            if not node:
+                return sm
+
+            if s == 'left': sm += node.val
+            lsum = f(node.left, 'left', sm)
+            rsum = f(node.right, 'right', 0)
+
+            return lsum + rsum
+
+        return f(root,'', 0)
