@@ -58,3 +58,28 @@ class Solution:
         root = dfs(root1, root2)
 
         return root
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
+        nTree = None
+        def f(node1, node2):
+            if not node1 and not node2: return None
+            
+            if node1 and not node2:
+                return node1
+            if not node1 and node2:
+                return node2
+
+            nTree = TreeNode(node1.val + node2.val)
+            nTree.left = f(node1.left, node2.left)
+            nTree.right = f(node1.right, node2.right)
+
+            return nTree
+            
+        return f(root1, root2)
