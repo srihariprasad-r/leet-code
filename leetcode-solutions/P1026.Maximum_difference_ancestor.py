@@ -20,3 +20,36 @@ class Solution(object):
             return max(dfs(node.left, cur_min, cur_max), dfs(node.right, cur_min, cur_max))
 
         return dfs(root, float('inf'), float('-inf'))
+
+#wrong submission
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxAncestorDiff(self, root: Optional[TreeNode]) -> int:    
+        mxnode = root.val
+        mnnode = root.val  
+        def f(node, mxnode, mnnode):
+            if not node: return mxnode, mnnode
+
+            mxnode, mnnode = f(node.left, mxnode, mnnode)
+            mxnode, mnnode = f(node.right, mxnode, mnnode)
+
+            mxnode = max(node.val, mxnode)
+            mnnode = min(node.val, mnnode)
+
+            return mxnode , mnnode
+
+        mxnode_left, mnnode_left = f(root.left, mxnode, mnnode)
+        mxnode = root.val
+        mnnode = root.val                  
+        mxnode_right, mnnode_right = f(root.right, mxnode, mnnode)
+
+        res  = abs(mxnode_left-mnnode_left) \
+            if abs(mxnode_right-mnnode_right) < abs(mxnode_left-mnnode_left) \
+            else abs(mxnode_right-mnnode_right)
+        
+        return  res
