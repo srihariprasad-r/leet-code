@@ -20,7 +20,6 @@ class Solution:
 
         return root
 
-# wrong submission
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -29,16 +28,15 @@ class Solution:
 #         self.right = right
 class Solution:
     def reverseOddLevels(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        newRoot = None
-        def f(node, lvl):
-            if not node: return
-            newRoot = TreeNode(node.val)
+        def f(node1,node2, lvl):
+            if not node1 or not node2: return
+            
             if lvl % 2: 
-                newRoot.left = f(node.right, lvl + 1)
-                newRoot.right = f(node.left, lvl + 1)
-            else:
-                newRoot.left = f(node.left, lvl + 1)
-                newRoot.right = f(node.right, lvl + 1)  
-            return newRoot
+                if node1 and node2:
+                    node1.val, node2.val = node2.val, node1.val
 
-        return f(root, 1)
+            f(node1.left, node2.right, lvl+1)
+            f(node1.right,node2.left, lvl+1)
+
+        f(root.left,root.right, 1)
+        return root
