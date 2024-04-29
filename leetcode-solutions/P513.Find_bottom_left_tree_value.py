@@ -79,21 +79,21 @@ class Solution:
 #         self.right = right
 class Solution:
     def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
-        if root and not root.left: return root.val
+        if root and not root.left and not root.right: return root.val
 
-        def leftmost(node, flag, lvl):
+        def leftmost(node, lvl):
             if not node: 
                 return 99999, -1
 
-            if flag == 'left' and not node.left and not node.right:
+            if not node.left and not node.right:
                 return node.val, lvl
 
-            leftnode, leftlvl = leftmost(node.left, 'left', lvl+1)
-            rightnode, rightlvl = leftmost(node.right, 'right', lvl+1)
+            rightnode, rightlvl = leftmost(node.right, lvl+1)
+            leftnode, leftlvl = leftmost(node.left, lvl+1)            
 
             return leftnode if leftlvl > rightlvl else rightnode, \
                 leftlvl if leftlvl > rightlvl else rightlvl
 
-        leftmostValue = leftmost(root, '', 1)[0] 
+        leftmostValue = leftmost(root, 1)[0] 
 
         return leftmostValue
