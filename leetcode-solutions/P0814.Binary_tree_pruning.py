@@ -21,7 +21,6 @@ class Solution(object):
         else:
             return None
 
-# wrong submission
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -36,17 +35,17 @@ class Solution:
 
             rN = None
             if node.val != 1 and not node.left and not node.right:
-                return rN
+                return None
 
             rN = TreeNode(node.val)
             rN.left = prune(node.left)
-            if rN.left and rN.left.val != 1 and not node.left and not node.right:
-                return rN 
+            if rN.left and rN.left.val != 1 and not rN.left.left and not rN.left.right:
+                rN.left = None
             rN.right = prune(node.right)
-            if rN.right and rN.right.val != 1 and not node.left and not node.right:
-                return rN   
+            if rN.right and rN.right.val != 1 and not rN.right.left and not rN.right.right:
+                rN.right = None 
 
             return rN
 
-        rN = prune(root)          
-        return prune(rN)    
+        nR = prune(root)          
+        return prune(nR)    
