@@ -69,3 +69,31 @@ class Solution:
         if res:
             o = heapq.heappop(res)
             return o[1]
+        
+# wrong submission
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
+        if root and not root.left: return root.val
+
+        def leftmost(node, flag, lvl):
+            if not node: 
+                return 99999, -1
+
+            if flag == 'left' and not node.left and not node.right:
+                return node.val, lvl
+
+            leftnode, leftlvl = leftmost(node.left, 'left', lvl+1)
+            rightnode, rightlvl = leftmost(node.right, 'right', lvl+1)
+
+            return leftnode if leftlvl > rightlvl else rightnode, \
+                leftlvl if leftlvl > rightlvl else rightlvl
+
+        leftmostValue = leftmost(root, '', 1)[0] 
+
+        return leftmostValue
