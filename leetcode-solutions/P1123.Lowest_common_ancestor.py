@@ -35,19 +35,30 @@ class Solution(object):
 #         self.right = right
 class Solution:
     def lcaDeepestLeaves(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        def lca(node, parent, lvl):
-            if not node: return parent, lvl
+        if root and not root.left and not root.right: return root
+
+        mx = float('-inf')
+
+        def lca(node, parent, lvl, mx):
+            if not node: return None, 0
 
             if not node.left and not node.right:
-                return parent, lvl
+                if mx == lvl:
+                    return parent, lvl
+                else:
+                    return node, lvl
+            elif not node.left or not node.right: 
+                if mx == lvl: return node, lvl
+            
+            mx = max(mx, lvl+1)
 
-            pleft, leftlvl = lca(node.left, node, lvl+1)
-            pright, rightlvl = lca(node.right, node, lvl+1)
+            pleft, leftlvl = lca(node.left, node, lvl+1, mx)
+            pright, rightlvl = lca(node.right, node, lvl+1, mx)
 
-            return pleft if leftlvl > rightlvl else pright , \
+            return pleft if leftlvl > rightlvl else pright, \
                 leftlvl if leftlvl > rightlvl else rightlvl
 
-        lparent, lvl1 =  lca(root.left, root, 1)
-        rparent, lvl2 =  lca(root.right, root, 1)
-
+        lparent, lvl1 =  lca(root.left, root, 1, mx)
+        rparent, lvl2 =  lca(root.right, root, 1, mx)
+        # print(lparent, rparent)
         return lparent if lvl1 > lvl2 else rparent
