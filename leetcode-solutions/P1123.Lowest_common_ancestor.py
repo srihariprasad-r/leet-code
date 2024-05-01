@@ -26,7 +26,6 @@ class Solution(object):
 
         return solution(root)[0]
 
-# wrong submission
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -35,30 +34,16 @@ class Solution(object):
 #         self.right = right
 class Solution:
     def lcaDeepestLeaves(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if root and not root.left and not root.right: return root
-
-        mx = float('-inf')
-
-        def lca(node, parent, lvl, mx):
-            if not node: return None, 0
-
-            if not node.left and not node.right:
-                if mx == lvl:
-                    return parent, lvl
-                else:
-                    return node, lvl
-            elif not node.left or not node.right: 
-                if mx == lvl: return node, lvl
-            
-            mx = max(mx, lvl+1)
-
-            pleft, leftlvl = lca(node.left, node, lvl+1, mx)
-            pright, rightlvl = lca(node.right, node, lvl+1, mx)
-
-            return pleft if leftlvl > rightlvl else pright, \
-                leftlvl if leftlvl > rightlvl else rightlvl
-
-        lparent, lvl1 =  lca(root.left, root, 1, mx)
-        rparent, lvl2 =  lca(root.right, root, 1, mx)
-        # print(lparent, rparent)
-        return lparent if lvl1 > lvl2 else rparent
+        self.lca, self.deepest = None, 0
+        def helper(node, depth):
+            self.deepest = max(self.deepest, depth)
+            if not node:
+                return depth
+            left = helper(node.left, depth + 1)
+            print('left', node.val, self.deepest)
+            right = helper(node.right, depth + 1)
+            if left == right == self.deepest:
+                self.lca = node
+            return max(left, right)
+        helper(root, 0)
+        return self.lca
