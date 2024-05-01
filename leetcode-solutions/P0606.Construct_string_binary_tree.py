@@ -1,4 +1,3 @@
-# wrong submission
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -14,9 +13,12 @@ class Solution:
             l = ''
             r = ''
             c = str(node.val)
-            l = '(' + str(f(node.left, c )) + ')'
+            if node.left: 
+                l = '(' + str(f(node.left, c )) + ')'
+            else:
+                if node.right: 
+                    l = '()'
             if node.right: r = '(' + f(node.right, c) + ')'
-            r = r.replace('()','')
 
             return (c + l + r)
 
