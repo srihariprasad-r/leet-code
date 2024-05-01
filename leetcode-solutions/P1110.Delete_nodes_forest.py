@@ -1,4 +1,3 @@
-# wrong submission
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -24,5 +23,5 @@ class Solution:
             return node
 
         root = f(root)
-        res.append(root)
+        if root: res.append(root)
         return res
