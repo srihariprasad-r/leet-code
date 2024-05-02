@@ -51,7 +51,6 @@ class Solution(object):
                         
         return True
     
-# wrong submission
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -63,19 +62,20 @@ class Solution:
         import collections
         s = collections.defaultdict(list)
 
+        if not root.val % 2: return False
         def f(node, lvl):
             if not node: return True
 
-            if lvl in s:
-                if lvl % 2: # odd
-                    if ((node.val % 2) or (s[lvl][-1] <= node.val)):                 
+            if lvl % 2: # odd
+                if ((node.val % 2) or (s[lvl] and s[lvl][-1] <= node.val)):                 
                         return False
-                else:
-                    if ((not node.val % 2) or (s[lvl][-1] >= node.val)):                                 
-                        return False               
-            
+            else:
+                if ((not node.val % 2) 
+                    or (s[lvl] and s[lvl][-1] >= node.val)):                                 
+                    return False               
+
             s[lvl].append(node.val)            
 
             return f(node.left, lvl+1) and f(node.right, lvl+1)         
 
-        return f(root, 0)                   
+        return f(root, 0)           
