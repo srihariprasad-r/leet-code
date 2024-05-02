@@ -64,25 +64,18 @@ class Solution:
         s = collections.defaultdict(list)
 
         def f(node, lvl):
-            if not node: return
+            if not node: return True
 
-            s[lvl].append(node.val)
-            f(node.left, lvl+1)
-            f(node.right, lvl+1)
-
-        f(root, 0)
-        
-        def verify(s):
-            for k, v in s.items():
-                if len(set(v)) != len(v):
-                    return False                
-                if k % 2:
-                    if v[0] < v[-1]:
+            if lvl in s:
+                if lvl % 2: # odd
+                    if ((node.val % 2) or (s[lvl][-1] <= node.val)):                 
                         return False
                 else:
-                    if v[0] > v[-1]:
-                        return False
+                    if ((not node.val % 2) or (s[lvl][-1] >= node.val)):                                 
+                        return False               
+            
+            s[lvl].append(node.val)            
 
-            return True
+            return f(node.left, lvl+1) and f(node.right, lvl+1)         
 
-        return verify(s)                        
+        return f(root, 0)                   
