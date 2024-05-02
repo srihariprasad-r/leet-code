@@ -50,3 +50,39 @@ class Solution(object):
                     continue
                         
         return True
+    
+# wrong submission
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isEvenOddTree(self, root: Optional[TreeNode]) -> bool:
+        import collections
+        s = collections.defaultdict(list)
+
+        def f(node, lvl):
+            if not node: return
+
+            s[lvl].append(node.val)
+            f(node.left, lvl+1)
+            f(node.right, lvl+1)
+
+        f(root, 0)
+        
+        def verify(s):
+            for k, v in s.items():
+                if len(set(v)) != len(v):
+                    return False                
+                if k % 2:
+                    if v[0] < v[-1]:
+                        return False
+                else:
+                    if v[0] > v[-1]:
+                        return False
+
+            return True
+
+        return verify(s)                        
