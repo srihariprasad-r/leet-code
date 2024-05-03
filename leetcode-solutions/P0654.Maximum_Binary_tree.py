@@ -42,3 +42,25 @@ class Solution:
             return root
 
         return dfs(nums)
+    
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def constructMaximumBinaryTree(self, nums: List[int]) -> Optional[TreeNode]:
+        rN = None
+        
+        def f(lst):
+            if not lst: return None
+            mx = max(lst)
+            rN = TreeNode(mx)
+            idx = lst.index(mx)
+            rN.left = f(lst[:idx])
+            rN.right = f(lst[idx+1:])
+
+            return rN
+
+        return f(nums)
