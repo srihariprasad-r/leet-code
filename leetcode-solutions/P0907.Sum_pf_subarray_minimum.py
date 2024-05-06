@@ -71,7 +71,7 @@ class Solution:
         left = [-1] * len(arr)
         right = [-1] * len(arr)
 
-        for i in range(len(arr)):
+        for i in range(len(arr)):      
             while ple_stck and arr[ple_stck[-1]] > arr[i]:
                 ple_stck.pop()
             left[i] = i - ple_stck[-1] if ple_stck else i+1
@@ -79,13 +79,13 @@ class Solution:
             ple_stck.append(i)
 
         for i in range(len(arr)-1, -1, -1):
-            while nle_stck and arr[nle_stck[-1]] > arr[i]:
+            while nle_stck and arr[nle_stck[-1]] >= arr[i]:
                 nle_stck.pop()
             right[i] = nle_stck[-1] - i if nle_stck else len(arr) - i
 
             nle_stck.append(i)
 
         for i in range(len(arr)):
-            res += (arr[i]* left[i]* right[i])
+            res += (arr[i] * left[i] * right[i])
 
-        return res
+        return res%100_000_007
