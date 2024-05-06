@@ -60,3 +60,32 @@ class Solution:
             ans += (prev[i]*nxt[i]*arr[i]) % 100_000_007
 
         return ans
+
+# wrong submission
+class Solution:
+    def sumSubarrayMins(self, arr: List[int]) -> int:
+        ple_stck =  []
+        nle_stck = []
+        res = 0
+
+        left = [-1] * len(arr)
+        right = [-1] * len(arr)
+
+        for i in range(len(arr)):
+            while ple_stck and arr[ple_stck[-1]] > arr[i]:
+                ple_stck.pop()
+            left[i] = i - ple_stck[-1] if ple_stck else i+1
+
+            ple_stck.append(i)
+
+        for i in range(len(arr)-1, -1, -1):
+            while nle_stck and arr[nle_stck[-1]] > arr[i]:
+                nle_stck.pop()
+            right[i] = nle_stck[-1] - i if nle_stck else len(arr) - i
+
+            nle_stck.append(i)
+
+        for i in range(len(arr)):
+            res += (arr[i]* left[i]* right[i])
+
+        return res
