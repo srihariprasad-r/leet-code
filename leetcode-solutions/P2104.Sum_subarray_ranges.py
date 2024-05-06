@@ -13,7 +13,6 @@ class Solution:
 
         return s
 
-# wrong submission
 class Solution:
     def subArrayRanges(self, nums: List[int]) -> int:
         res = 0
@@ -21,37 +20,44 @@ class Solution:
         ple = []
         nle = []
 
-        leftMin = [0] * len(nums)
-        rightMin = [0] * len(nums)
+        leftMin = [len(nums)] * len(nums)
+        rightMin = [-1] * len(nums)
 
         for i in range(len(nums)):
             while ple and nums[ple[-1]] > nums[i]:
-                ple.pop()
-            leftMin[i] = i - ple[-1] if ple else i + 1
+                leftMin[ple.pop()] = i
+            ple.append(i)
 
         for i in range(len(nums)-1, -1, -1):
-            while nle and nums[nle[-1]] > nums[i]:
-                nle.pop()
-            rightMin[i] = nle[-1] - i if nle else len(nums) - i
+            while nle and nums[nle[-1]] >= nums[i]:
+                rightMin[nle.pop()] = i
+            nle.append(i)
+
 
         pge = []
         nge = []
 
-        leftMax = [0] * len(nums)
-        rightMax = [0] * len(nums)
+        leftMax = [len(nums)] * len(nums)
+        rightMax = [-1] * len(nums)
 
         for i in range(len(nums)):
             while pge and nums[pge[-1]] < nums[i]:
-                pge.pop()
-            leftMax[i] = i - pge[-1] if pge else i + 1
+                leftMax[pge.pop()] = i
+            pge.append(i)
 
         for i in range(len(nums)-1, -1, -1):
-            while nge and nums[nge[-1]] < nums[i]:
-                nge.pop()
-            rightMax[i] = nge[-1] - i if nge else len(nums) - i
-
+            while nge and nums[nge[-1]] <= nums[i]:
+                rightMax[nge.pop()] = i
+            nge.append(i)
 
         for i in range(len(nums)):
-            res += nums[i]* (max(leftMax[i] , rightMax[i]) - min(rightMin[i] , leftMin[i]))
+            l = leftMax[i]
+            r = rightMax[i]
+            res += nums[i]* (i-l) * (r-i) 
+
+        for i in range(len(nums)):  
+            l = leftMin[i]
+            r = rightMin[i]                  
+            res -= nums[i] * (i-l) * (r-i) 
 
         return res
