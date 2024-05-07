@@ -12,16 +12,19 @@ class Solution:
 
         return cnt
 
-# wromg submission
 class Solution:
     def maxChunksToSorted(self, arr: List[int]) -> int:
         stck = []
         cnt = 0
+        cmax = 0
 
         for i in range(len(arr)):
-            while stck and stck[-1] > arr[i]:
-                cnt += 1
-                stck.pop()
-            stck.append(arr[i])
+            if not stck or (stck and stck[-1] < arr[i]):
+                stck.append(arr[i])
+                cmax = arr[i]
+            else:
+                while stck and stck[-1] > arr[i]:
+                    stck.pop()
+                stck.append(cmax)
         
-        return len(arr) - cnt
+        return len(stck)
