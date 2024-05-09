@@ -1,4 +1,3 @@
-# TLE
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -19,13 +18,9 @@ class Solution:
 
         nge = [0] *c
         
-        for i in range(len(el)-1, -1, -1):
-            j = i + 1 
-            stck = []
-            while j < len(el):
-                if el[j] > el[i]: stck.append(j)
-                j += 1
-            while stck and el[stck[-1]] > el[i]:
-                nge[i] = el[stck.pop()]            
+        for i in range(len(el)):
+            while stck and el[stck[-1]] < el[i]:                
+                nge[stck.pop()] = el[i]
+            stck.append(i)                                   
 
         return nge
