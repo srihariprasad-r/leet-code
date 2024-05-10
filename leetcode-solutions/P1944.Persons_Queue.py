@@ -14,18 +14,17 @@ class Solution:
 
         return res
 
-# wrong submission
 class Solution:
     def canSeePersonsCount(self, heights: List[int]) -> List[int]:
         stck = []
         nge = [0] * len(heights)
 
         for i in range(len(heights)-1, -1, -1):
-            cnt = 1 if i < len(heights) - 1 else 0
-            while stck and stck[-1] < len(heights) - 1 and heights[stck[-1]] < heights[i]:              
+            cnt = 0
+            while stck and heights[stck[-1]] < heights[i]:              
                 stck.pop()
                 cnt += 1
+            nge[i] = cnt + 1 if stck else cnt       
             stck.append(i)
-            nge[i] += cnt
 
-        return nge        
+        return nge
