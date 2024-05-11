@@ -15,7 +15,6 @@ class Solution:
         
         return res
     
-# wrong submission
 class Solution:
     def totalSteps(self, nums: List[int]) -> int:
         stck = []
@@ -23,7 +22,7 @@ class Solution:
 
         for i in range(len(nums)-1, -1, -1):
             while stck and nums[stck[-1]] < nums[i]:
-                el[i] += el[stck.pop()] + 1                                
+                el[i] = max(el[i]+1, el[stck.pop()])                               
             stck.append(i)
 
-        return max(el)
+        return max(el)   
