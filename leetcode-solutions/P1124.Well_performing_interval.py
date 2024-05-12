@@ -1,7 +1,7 @@
 # wrong submission
 class Solution:
     def longestWPI(self, hours: List[int]) -> int:
-        td = [x//8  for x in hours]
+        td = [1 if x > 8 else 0  for x in hours]
         res = 0
 
         ntd_cnt = 0
@@ -19,9 +19,9 @@ class Solution:
                 res  = max(res, i -j + 1)
             else:
                 while j <= i: 
-                    j += 1
-                    td_cnt = 0
-                    ntd_cnt = 0
+                    td_cnt -= 1 if td[j] == 1 else 0
+                    ntd_cnt -= 1 if td[j] == 0 else 0                    
+                    j += 1                    
             i += 1
 
         return res
