@@ -52,3 +52,23 @@ class Solution:
             stck.append(i)
 
         return right - left + 1 if right - left > 0 else 0
+
+# wrong submission
+class Solution:
+    def findUnsortedSubarray(self, nums: List[int]) -> int:
+        stck = []
+
+        mn = -1
+        mx = len(nums)
+        for i in range(len(nums)):
+            while stck and nums[stck[-1]] < nums[i]:
+                if len(stck) > 1:
+                    if mn == -1: 
+                        mn = stck[0]
+                    elif mx == len(nums): 
+                        mx = stck[-1]                   
+                stck.pop()             
+            stck.append(i)
+
+        if mx == len(nums) and mn == -1: return 0
+        return mx - mn + 1
