@@ -21,7 +21,7 @@ class Solution:
                 stck.pop()
             stck.append(i)
 
-        leftsmaller = heights[stck[0]]
+        leftsmaller = heights[stck[0]] if stck[0] < len(heights) else 0 
 
         rightsmaller = float('inf')
         stck = []
@@ -31,13 +31,13 @@ class Solution:
                 stck.pop()
             stck.append(i)
 
-        rightsmaller = heights[stck[0]]     
+        rightsmaller = heights[stck[0]] if stck[0] != 0 else len(heights)   
 
         s = 0
         i = 0
 
         while i < len(heights):
-            if i == midx:
+            if ((i == midx) or (heights[i] == heights[midx])):
                 s += heights[i]
             elif i < midx:
                 s += leftsmaller
