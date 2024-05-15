@@ -1,22 +1,24 @@
 # wrong submission
 class Solution:
     def minSumSquareDiff(self, nums1: List[int], nums2: List[int], k1: int, k2: int) -> int:
-        pq = deque()
+        pq = []
         res = 0
+
+        heapq.heapify(pq)
 
         k = k1 + k2
 
         for a,b in zip(nums1, nums2):
-            pq.append(abs(a-b))
-
-        while k > 0:
-            el = pq.pop()
-            if el == 0: break
-            pq.append(el-1)
-            k -= 1
+            heapq.heappush(pq, a-b)
         
+        while k > 0:
+            el = heapq.heappop(pq)
+            if el == 0: break
+            heapq.heappush(pq, abs(el)-1)
+            k -= 1
+
         while pq:
-            el = pq.pop()
-            res += el**2
+            el = heapq.heappop(pq)
+            res += el*el
 
         return res
