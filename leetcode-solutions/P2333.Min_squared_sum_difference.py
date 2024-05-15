@@ -9,13 +9,13 @@ class Solution:
         k = k1 + k2
 
         for a,b in zip(nums1, nums2):
-            heapq.heappush(pq, a-b)
-        
-        while k > 0:
+            heapq.heappush(pq, -abs(a-b))
+
+        while pq and k > 0:
             el = heapq.heappop(pq)
-            if el == 0: break
-            heapq.heappush(pq, abs(el)-1)
-            k -= 1
+            if el != 0: 
+                heapq.heappush(pq, abs(el)-1)
+                k -= 1
 
         while pq:
             el = heapq.heappop(pq)
