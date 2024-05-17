@@ -11,3 +11,27 @@ class Solution(object):
             return True
         else:
             return self.hasPathSum(root.left, sum - root.val) or self.hasPathSum(root.right, sum - root.val)
+
+# wrong submission
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root: return False
+        def f(node, s):
+            if not node: 
+                if s == targetSum: return True
+                return False
+
+            if s == targetSum: return True
+
+            l = f(node.left, s+node.val)
+            r = f(node.right, s+node.val)
+            
+            return l or r
+        
+        return f(root.left, root.val) or f(root.right, root.val)
