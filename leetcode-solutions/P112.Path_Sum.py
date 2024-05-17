@@ -12,7 +12,6 @@ class Solution(object):
         else:
             return self.hasPathSum(root.left, sum - root.val) or self.hasPathSum(root.right, sum - root.val)
 
-# wrong submission
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -22,6 +21,11 @@ class Solution(object):
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root: return False
+
+        if root and not root.left and not root.right:
+            if root.val == targetSum: return True
+            return False
+            
         def f(node, s):
             if not node: return False
 
