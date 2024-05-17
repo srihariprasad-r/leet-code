@@ -23,14 +23,14 @@ class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root: return False
         def f(node, s):
-            if not node: 
-                if s == targetSum: return True
-                return False
+            if not node: return False
 
-            if s == targetSum: return True
+            if (node and not node.left and not node.right):
+                if s + node.val == targetSum: return True
+                return False  
 
-            l = f(node.left, s+node.val)
-            r = f(node.right, s+node.val)
+            l = f(node.left, s + node.val)          
+            r = f(node.right, s + node.val)                 
             
             return l or r
         
