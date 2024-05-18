@@ -37,3 +37,36 @@ class Solution(object):
             return self.result
 
         return dfs(root, 0)
+
+# wrong submission
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:   
+        if not root: return 0
+        self.cnt = 0
+        self.dct = collections.defaultdict(int)
+        self.dct[0] = 1
+        self.dct[root.val] = 1
+        cnt = 0     
+        def f(node, s):
+            if not node: return
+
+            self.dct[node.val] += 1
+
+            if s + node.val - targetSum in self.dct: 
+                self.cnt += self.dct[s + node.val - targetSum]    
+
+            self.dct[s+node.val] += 1
+            f(node.left, s + node.val)             
+            f(node.right, s + node.val)
+            self.dct[node.val] -= 1
+
+        f(root.left, root.val) 
+        f(root.right, root.val) 
+
+        return self.cnt
