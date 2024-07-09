@@ -46,3 +46,16 @@ class Solution:
             dp[i][1] = max(dp[i-1][1], -prices[i])    # removed dp[i-1][0] as it was incorrect submission
 
         return dp[-1][0]
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        min_prc = float('inf')
+        mx_prc = float('-inf')        
+        
+        for x in prices:
+            if x < min_prc:
+                min_prc = x
+            if x > mx_prc:
+                mx_prc = max(mx_prc, x - min_prc)
+        
+        return mx_prc        

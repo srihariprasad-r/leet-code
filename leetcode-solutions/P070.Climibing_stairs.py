@@ -76,3 +76,18 @@ class Solution:
             return dp[n]
 
         return recurse(n-1) + recurse(n-2)
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        dp = [0] * (n+1)
+        def f(s):
+            if s < 0: return 0
+
+            if s == 0: return 1
+
+            if dp[s] > 0: return dp[s]
+            dp[s] += f(s-1) + f(s-2)
+
+            return dp[s]
+
+        return f(n)                
