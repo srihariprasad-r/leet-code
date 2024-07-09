@@ -51,3 +51,19 @@ class Solution:
 
         dp = [-1] * (target+1)
         return dfs(0, dp)
+
+# TLE
+class Solution:
+    def combinationSum4(self, nums: List[int], target: int) -> int:
+        def f(s):
+            if s > target : return 0            
+            if s == target: 
+                return 1
+
+            cnt = 0
+            for n in nums:
+                cnt += f(s + n)
+
+            return cnt
+
+        return f(0)        
