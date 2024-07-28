@@ -25,31 +25,32 @@ class Solution:
         
         return dfs(0,0, [], dp)
             
-# wrong submission
 class Solution:
     def rob(self, nums: List[int]) -> int:
         if len(nums) == 1: return nums[0]
+      
+        n = len(nums)            
 
-        n = len(nums)
-        # if n % 2 == 0:
-        #     nums = nums + [nums[0]]
+        dp = [[-1 for _ in range(2)] for _ in range(len(nums))]
 
-        def f(idx):            
+        def f(idx, s):  
+            if s == 0 and idx == len(nums) - 1: return 0  
+
             if idx >= len(nums):
                 return 0
             
+            if dp[idx][s] != -1: return dp[idx][s]
+
             steal = 0
             no_steal = 0
-            steal  = nums[idx] + f(idx+2)
-            no_steal = f(idx+1)
+            steal  = nums[idx] + f(idx+2, s)
+            no_steal = f(idx+1, s)
 
-            return max(steal, no_steal)
+            dp[idx][s]  = max(steal, no_steal)
 
-        mx1= float('-inf')
-        mx2 = float('-inf')
-        if n % 2 == 0:
-            mx1 = f(0)
-        else:
-            mx2 = f(1)
+            return dp[idx][s]
 
-        return max(mx1, mx2)                            
+        mx1 = f(0, 0)
+        mx2 = f(1, 1)
+
+        return max(mx1, mx2)                                         

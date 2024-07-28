@@ -90,3 +90,21 @@ class Solution:
                     dp[i][j] = min(dp[i][j-coins[i-1]] + 1, dp[i-1][j])
 
         return dp[-1][-1] if dp[-1][-1] != float('inf') else -1
+
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        def recursion(idx, tot, ct):
+            if tot < 0 or idx < 0: return float('inf')
+            if idx == 0:
+                return ct + (tot//coins[idx]) if tot%coins[idx] == 0 else float('inf')
+            
+            pick = float('inf')
+            if coins[idx] <= tot: 
+                pick = recursion(idx, tot-coins[idx], ct + 1)
+            no_pick = recursion(idx-1, tot, ct)                
+
+            return min(pick, no_pick)
+
+        res = recursion(len(coins)-1, amount, 0)
+        return res if res != float('inf') else -1
