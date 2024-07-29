@@ -94,17 +94,24 @@ class Solution:
 
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
+        coins = sorted(coins, key=lambda x:x)
+        dp = [[-1 for _ in range(amount+1)] for _ in range(len(coins))]
         def recursion(idx, tot, ct):
             if tot < 0 or idx < 0: return float('inf')
+            if tot == 0: return ct
             if idx == 0:
                 return ct + (tot//coins[idx]) if tot%coins[idx] == 0 else float('inf')
-            
+
+            if dp[idx][tot] != -1:
+                return dp[idx][tot]
+
             pick = float('inf')
             if coins[idx] <= tot: 
                 pick = recursion(idx, tot-coins[idx], ct + 1)
             no_pick = recursion(idx-1, tot, ct)                
 
+            dp[idx][tot] = min(pick, no_pick)
             return min(pick, no_pick)
 
         res = recursion(len(coins)-1, amount, 0)
-        return res if res != float('inf') else -1
+        return res if res != float('inf') else -1        
