@@ -67,3 +67,19 @@ class Solution:
             return cnt
 
         return f(0)        
+
+class Solution:
+    def combinationSum4(self, nums: List[int], target: int) -> int:    
+        def recursion(s, el):
+            if s < 0: return 0
+            if s == 0: 
+                return 1
+
+            pick = 0
+            for i in range(len(nums)):
+                if nums[i] <= s:
+                    pick += recursion(s - nums[i], el + [nums[i]])
+
+            return pick
+
+        return recursion(target,[])

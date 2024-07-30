@@ -44,3 +44,17 @@ class Solution:
         dp = {}
 
         return dfs(0, 0, dp)
+
+
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        def recursion(idx, s):
+            if idx < 0 and s == 0: return 1                
+            if (idx < 0): return 0
+
+            pos = recursion(idx-1, s + nums[idx])
+            neg = recursion(idx-1, s - nums[idx])
+
+            return pos + neg
+
+        return recursion(len(nums)-1, target)
