@@ -2,16 +2,23 @@ class Solution:
     def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
         s = sum(nums)
         if s % k: return False
-        per_subset = s // k
 
-        d = collections.defaultdict(int)
+        need = s // k
+        
+        def recursion(idx, st, s_k):
+            if idx >= len(nums): return
 
-        cnt = 0
-        for n in nums:            
-            d[n] = abs(n-per_subset)
+            if st == 0 or s_k == 0: return True
 
-        for n in nums:
-            if abs(per_subset - n) in d:
-                cnt += 1
+            st += nums[idx]
+            if st == need: 
+                return recursion(idx+1, 0, s_k - 1)
 
-        return True if cnt >= k else False        
+            for i in range(idx, len(nums)):
+                if st < need :
+                    if recursion(i+1, st, s_k):
+                        return True
+
+            return False
+
+        return recursion(0, 0, k)
