@@ -4,9 +4,9 @@ class Solution:
 
         dp = [1] * len(pairs)
 
-        for i in range(1, len(pairs)):
-            for j in range(i):
+        for i in range(len(pairs)-1, 0, -1):
+            for j in range(i-1, -1, -1):
                 if pairs[i][0] > pairs[j][1]:
-                    dp[i] = dp[j] + 1
+                    dp[j] = dp[i] + 1
 
-        return dp[-1]        
+        return dp[0]        
