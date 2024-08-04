@@ -43,3 +43,19 @@ class Solution:
         res = min(res, recursion(0))
 
         return res
+
+
+class Solution:
+    def mincostTickets(self, days: List[int], costs: List[int]) -> int:
+        def recursion(idx, nxt, cost=float('inf')):
+            if ((idx >= len(days)) or (nxt > days[-1])) : return cost
+
+            take = float('inf')
+
+            take = min(take, min(recursion(idx+1, days[idx] + 1, cost+ costs[0]),
+                    recursion(idx+1, days[idx] + 7, cost+ costs[1]),
+                    recursion(idx+1, days[idx] + 30, cost+ costs[2])))
+
+            return take
+        
+        return recursion(0, 0, 0)                
