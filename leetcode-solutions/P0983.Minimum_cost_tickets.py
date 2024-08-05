@@ -47,15 +47,36 @@ class Solution:
 
 class Solution:
     def mincostTickets(self, days: List[int], costs: List[int]) -> int:
-        def recursion(idx, nxt, cost=float('inf')):
-            if ((idx >= len(days)) or (nxt > days[-1])) : return cost
+        dp = [float('inf')] * len(days)
+
+        def getnextday(i, inc):
+            st = days[i]
+            end = inc
+
+            while i < len(days) and days[i] <= st + end - 1:
+                i += 1
+
+            return i
+
+        def recursion(idx, cost=float('inf')):
+            if idx >= len(days) : return 0
+
+            if dp[idx] != float('inf'): return dp[idx]
 
             take = float('inf')
 
-            take = min(take, min(recursion(idx+1, days[idx] + 1, cost+ costs[0]),
-                    recursion(idx+1, days[idx] + 7, cost+ costs[1]),
-                    recursion(idx+1, days[idx] + 30, cost+ costs[2])))
+            nxt_idx_1_day = getnextday(idx, 1)
+            nxt_idx_7_day = getnextday(idx, 7)
+            nxt_idx_30_day = getnextday(idx, 30)
 
-            return take
+            one_day = costs[0] + recursion(nxt_idx_1_day)
+            seven_day = costs[1] + recursion(nxt_idx_7_day)
+            thirty_day = costs[2] + recursion(nxt_idx_30_day)                        
+
+            lowest = min(one_day, min(seven_day, thirty_day))
+
+            dp[idx] = min(dp[idx], lowest)                    
+
+            return dp[idx]
         
-        return recursion(0, 0, 0)                
+        return recursion(0)                        
