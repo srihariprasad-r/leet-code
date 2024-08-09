@@ -48,17 +48,21 @@ class Solution:
     
 class Solution:
     def findMaxForm(self, s: List[str], m: int, n: int) -> int:
-        def recursion(idx, o_c, z_c, c):
-            if idx >= len(s): return c         
+        def recursion(idx, o_c, z_c, l, c):       
+            if idx >= len(s): return c       
             
             res = float('-inf')
             take = 0
-            if o_c < m and z_c < n:
-                z_c += s[idx].count('0')
-                o_c += s[idx].count('1')
-                take = recursion(idx+1, o_c, z_c, c + 1)
-            no_take = recursion(idx+1, o_c, z_c, c)
-            res = max(res, take  + no_take)
+            no_take = 0
+
+            a = s[idx].count('0')
+            b = s[idx].count('1')
+            if o_c + b <= n or z_c + a <= m:
+                z_c += a
+                o_c += b
+                take = recursion(idx+1, o_c, z_c, l + [s[idx]], c + 1)
+            no_take = recursion(idx+1, o_c, z_c, l, c)
+            res = max(res, max(take, no_take))
             return res
 
-        return recursion(0, 0, 0, 0)            
+        return recursion(0, 0, 0, [], 0)               
