@@ -36,3 +36,16 @@ class Solution(object):
             mx = max(mx, sum)
             
         return mx
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        if len(nums) == 1: return nums[-1]
+
+        csum = 0
+        osum = float('-inf')
+
+        for i in range(len(nums)):            
+            csum = max(nums[i], csum + nums[i])
+            osum = max(osum, csum)
+
+        return osum        
