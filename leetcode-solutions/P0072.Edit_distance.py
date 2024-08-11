@@ -34,3 +34,24 @@ class Solution(object):
                                 )
 
         return dp[-1][-1]
+
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        def recursion(w1, w2):
+            if not w1 and not w2 : return 0
+
+            if not w2 : return len(w1)
+            if not w1: return len(w2)
+
+            same = float('inf')
+            diff = float('inf')
+            if w1[0] == w2[0]:
+                same = recursion(w1[1:], w2[1:])
+            else:
+                diff =  1 + min(recursion(w1, w2[1:]),
+                    recursion(w1[1:], w2),
+                    recursion(w1[1:], w2[1:])
+                    )
+
+            return min(same, diff)
+        return recursion(word1, word2)                
