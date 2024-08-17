@@ -36,16 +36,24 @@ class Solution(object):
             
         return ans
         
-# wrong submission
 class Solution:
     def maxLength(self, arr: List[str]) -> int:
-        if len(arr) == 1: return len(set(arr[-1]))
-        mx = float('-inf')
-        for i in range(len(arr)-1):
-            for j in range(i+1, len(arr)):
-                len1 = len(set(arr[i]))
-                len2 = len(set(arr[j]))
-                if len1 + len2 > mx:
-                    mx = len1 + len2
+        def dups(s1):
+            d = [0] * 26
+            for i in range(len(s1)):
+                if d[ord(s1[i])-ord('a')]: return True
+                d[ord(s1[i]) - ord('a')] = 1
+            
+            return False
 
-        return mx        
+        def recursion(idx, s):
+            if idx >= len(arr): return len(s) if not dups(s) else 0
+
+            include = 0
+            if not dups(arr[idx]):
+                include = recursion(idx+1, s + arr[idx])
+            exclude = recursion(idx+1, s)
+
+            return max(include, exclude)
+        
+        return recursion(0, '')        
