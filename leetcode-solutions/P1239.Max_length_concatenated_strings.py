@@ -36,4 +36,16 @@ class Solution(object):
             
         return ans
         
-        
+# wrong submission
+class Solution:
+    def maxLength(self, arr: List[str]) -> int:
+        if len(arr) == 1: return len(set(arr[-1]))
+        mx = float('-inf')
+        for i in range(len(arr)-1):
+            for j in range(i+1, len(arr)):
+                len1 = len(set(arr[i]))
+                len2 = len(set(arr[j]))
+                if len1 + len2 > mx:
+                    mx = len1 + len2
+
+        return mx        
