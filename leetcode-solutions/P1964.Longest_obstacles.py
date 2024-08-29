@@ -3,8 +3,9 @@ class Solution:
         dp = [1] * len(obstacles)
 
         for i in range(1, len(obstacles)):
+            cnt = 0
             for j in range(0,i):
                 if obstacles[i] >= obstacles[j]:
-                    dp[i] = 1 + dp[j]
+                    dp[i] = max(dp[i], dp[j]+1) 
 
         return dp
