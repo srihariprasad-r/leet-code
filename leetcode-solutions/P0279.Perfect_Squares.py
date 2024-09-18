@@ -77,3 +77,21 @@ class Solution:
         
 
         return dp[-1]
+
+
+class Solution:
+    def numSquares(self, n: int) -> int:
+        res = float('inf')
+        def recursion(d,res):
+            if d <= 0: return 0
+           
+            c = 0
+            for i in range(1, min(d*d+1,n+1)):
+                if i * i <= d:
+                    c = 1+recursion(d-i*i,res)
+            
+                res = min(res, c)
+
+            return res
+
+        return recursion(n,res)
