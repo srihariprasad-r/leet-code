@@ -18,3 +18,22 @@ class Solution:
             return False if not a and not b else True
 
         return recursion(0,0,0,'')          
+
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        def recurse(i, j, c):
+            if i + j >= len(s3):
+                if c == s3: return True
+                return False
+
+            take = False
+            no_take = False
+  
+            if i < len(s1) and s1[i] == s3[i+j]:
+                take = recurse(i+1, j, c + s1[i])            
+            if j < len(s2) and s2[j] == s3[i+j]:
+                no_take = recurse(i, j+1, c + s2[j])  
+
+            return take or no_take
+        
+        return recurse(0,0,'')                    
