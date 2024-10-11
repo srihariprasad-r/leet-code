@@ -58,3 +58,14 @@ class Solution:
             return pos + neg
 
         return recursion(len(nums)-1, target)
+
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        def recurse(idx, s):
+            if idx >= len(nums): 
+                if s == target: return 1
+                return 0
+
+            return recurse(idx+1, s + nums[idx]) + recurse(idx+1, s - nums[idx])
+
+        return recurse(0, 0)        
