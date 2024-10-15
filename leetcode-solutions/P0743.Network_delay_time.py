@@ -57,3 +57,26 @@ class Solution:
             if distance[i] > mx: mx = distance[i]
 
         return -1 if not all_nodes_visited else mx
+
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        import heapq
+        adjlist = collections.defaultdict(list)
+        lst = []
+
+        for i in range(len(times)):
+            adjlist[times[i][0]].append((times[i][2], times[i][1]))
+
+        for a in adjlist[k]:
+            lst.append(a)
+
+        heapq.heapify(lst)
+
+        while lst:
+            top = heapq.heappop(lst)
+            node, dist = top[1], top[0]
+            if not lst and not (node in adjlist): return dist
+            for n in adjlist[node]:
+                heapq.heappush(lst, (dist + n[0], n[1]))
+
+        return -1        
