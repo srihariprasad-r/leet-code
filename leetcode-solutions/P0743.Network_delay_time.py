@@ -64,19 +64,30 @@ class Solution:
         adjlist = collections.defaultdict(list)
         lst = []
 
-        for i in range(len(times)):
-            adjlist[times[i][0]].append((times[i][2], times[i][1]))
+        dst = [float('inf')] * (n+1)
 
-        for a in adjlist[k]:
-            lst.append(a)
+        for i in range(len(times)):
+            adjlist[times[i][0]].append((times[i][1], times[i][2]))
+
+        dst[k] = 0
+
+        lst.append((0, k))        
 
         heapq.heapify(lst)
 
         while lst:
             top = heapq.heappop(lst)
             node, dist = top[1], top[0]
-            if not lst and not (node in adjlist): return dist
             for n in adjlist[node]:
-                heapq.heappush(lst, (dist + n[0], n[1]))
-
-        return -1        
+                if dist + n[1] < dst[n[0]]:
+                    dst[n[0]] = dist + n[1]                  
+                    heapq.heappush(lst, (dst[n[0]] , n[0]))
+        
+        res = -1
+        for idx, k in enumerate(dst):
+            if idx > 0 and k == float('inf'):
+                return -1 
+            if k != float('inf') and k > 0:
+                res = max(res, k)
+        
+        return res  
