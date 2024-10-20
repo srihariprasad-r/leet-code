@@ -72,4 +72,38 @@ class Solution:
                             f_arr[i][j] = mn
                 j += 1    
         
-        return f_arr[0][len(s)-1]                    
+        return f_arr[0][len(s)-1]               
+
+class Solution:
+    def minCut(self, s: str) -> int:
+        res = float('inf')
+
+        def palindrome(st):
+            i = 0 
+            j = len(st) - 1
+
+            while i <= j:
+                if st[i] != st[j]: 
+                    return False
+
+                i += 1
+                j -= 1
+            
+            return True
+
+        def recurse(i, j, res):
+            if ((i > j) or (j >= len(s))) : return 0
+
+            if palindrome(s[i:j+1]): return 0
+
+            pc1 = float('inf')
+            pc2 = float('inf')
+
+            for k in range(i, j):
+                pc1 = recurse(i, k, res)                
+                pc2 = recurse(k+1, j, res)
+                res = min(res, 1+pc1+ pc2)
+
+            return res
+        
+        return recurse(0, len(s)-1, res)        
