@@ -58,3 +58,22 @@ class Solution:
 
         dp = [[-1 for _ in range(2)] for _ in range(len(nums1))]
         return dfs(1, dp, 0)
+
+class Solution:
+    def minSwap(self, nums1: List[int], nums2: List[int]) -> int:
+        swp = [float('inf')] * len(nums1)
+        no_swp = [float('inf')] * len(nums1)
+
+        swp[0] = 1
+        no_swp[0] = 0
+
+        for i in range(1, len(nums1)):
+            if nums1[i] > nums1[i-1] and nums2[i] > nums2[i-1]:
+                swp[i] = swp[i-1] + 1
+                no_swp[i] = no_swp[i-1]
+            
+            if nums1[i] > nums2[i-1] and nums2[i] > nums1[i-1]:
+                swp[i] = min(swp[i], no_swp[i-1]+1)
+                no_swp[i] = min(no_swp[i], swp[i-1])
+        
+        return min(swp[-1], no_swp[-1])        
